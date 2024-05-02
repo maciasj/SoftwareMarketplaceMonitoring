@@ -31,8 +31,8 @@ class EclipseService(serviceInterface):
         response = requests.get('https://marketplace.eclipse.org/taxonomy/term/{},{}/api/p'.format(category, market), params=params)
         if response.status_code == 200:
             try:
-                products = EclipseJSONParser.EclipseJSONParser.extractProducts(response)
-                print(products)
+                products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"Category")
+                # Aqui se deberian de meter en la base de datos
                 return response
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
@@ -44,12 +44,11 @@ class EclipseService(serviceInterface):
     def getProductById(request, nodeId):
         pageNumber = request.GET.get('page_num') or 1
         params = {'page_num': pageNumber}  
-
         response = requests.get('https://marketplace.eclipse.org/node/{}}/api/p'.format(nodeId), params=params)
-        
         if response.status_code == 200:
             try:
                 info = response.text
+                product = EclipseJSONParser.EclipseJSONParser.extractSingleProduct(response)
                 return response
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
@@ -83,7 +82,8 @@ class EclipseService(serviceInterface):
         
         if response.status_code == 200:
             try:
-                info = response.text
+                products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"favorites")
+                # Aqui se deberian de meter en la base de datos
                 return response
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
@@ -101,7 +101,8 @@ class EclipseService(serviceInterface):
         
         if response.status_code == 200:
             try:
-                info = response.text
+                products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"search")
+                # Aqui se deberian de meter en la base de datos
                 return response
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}

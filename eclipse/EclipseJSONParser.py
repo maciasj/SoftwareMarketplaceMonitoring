@@ -15,9 +15,7 @@ class EclipseJSONParser(JSONParser):
         print(response.text)
         categories = []
         root = ET.fromstring(response.text)  # Parse XML string
-        print(root)
         for market_elem in root.findall('market'):
-            print(market_elem)
             for category in market_elem.findall('category'):
                 category = {
                     'id': category.get('id'),
@@ -33,7 +31,6 @@ class EclipseJSONParser(JSONParser):
     def extractMarkets(response):
         markets = []
         root = ET.fromstring(response.text)  # Parse XML string
-
         for market_elem in root.findall('market'):
             market = {
                 'id': market_elem.get('id'),
@@ -44,11 +41,11 @@ class EclipseJSONParser(JSONParser):
 
         return markets
     
-
-    def extractProducts(response):
+    
+    def extractProductsByParameter(response, typeOfSearch):
         products = []
         root = ET.fromstring(response.text)
-        category= root.find('category')
+        category= root.find(typeOfSearch)
         for product_elem in category.findall('node'):
             #Añadimos las categorias a las que pertenece
             categories = []
@@ -70,3 +67,27 @@ class EclipseJSONParser(JSONParser):
             }
             products.append(product)
         return products
+    
+    def extractSingleProduct(response):
+        product = {}
+        root = ET.fromstring(response.text)
+        product_elem = root.find('node')
+        #Añadimos las categorias a las que pertenece
+        categories = []
+        for category in product_elem.find('categories').findall('category'):
+            categories.append(category.get('id'))
+        #Añadimos una pequeña descripcion del producto
+        short_description_elem = product_elem.find('shortdescription')
+        desc = ""
+        if short_description_elem is not None:
+            desc = short_description_elem.text.strip()
+
+        #Añadir atributos del producto
+        product = {
+            'id': product_elem.get('id'),
+            'url': product_elem.get('url'),
+            'name': product_elem.get('name'),
+            'categories': categories,
+            'shortdescription': desc,
+        }
+        return product
