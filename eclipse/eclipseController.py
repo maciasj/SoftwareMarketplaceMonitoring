@@ -1,14 +1,112 @@
-from django.urls import path
+import json
+import requests
+from django.http import JsonResponse
+from . import EclipseJSONParser
+from MonitoringSoftwareMarketplaces.controllerInterface import controllerInterface
 
-from . import printer
+class EclipseController(controllerInterface):
+    def getEclipseCategoriesAndMarketplaces(request):
+        pageNumber = request.GET.get('page_num') or 1
+        params = {'page_num': pageNumber}  
+        response = requests.get('https://marketplace.eclipse.org/api/p', params=params)
 
-urlpatterns = [
-    path('eclipse/', printer.bienvenidoEclispe , name='index'),
-    path('eclipse/categories', printer.printCategories, name='categories'),
-    path('eclipse/categories<int:pageNumber>', printer.printCategories, name='categories_with_page'),
-    path('eclipse/product/market/category/<int:category>,<int:market>', printer.printProductsByMarketandCategory , name='products_by_marketplace_and_category'),
-    path('eclipse/product/node/<int:nodeId>', printer.printproductByNodeID , name='products_by_nodeId'),
-    path('eclipse/topFavorites', printer.printTopFavorites , name='top_favorite_products'),
-    path('eclipse/', printer.bienvenidoEclispe , name='index'),
-    path('eclipse/', printer.bienvenidoEclispe , name='index'),
-]
+        info = response.text
+        if response.status_code == 200:
+            try:
+                categories = EclipseJSONParser.EclipseJSONParser.extractCategories(response)
+                markets = EclipseJSONParser.EclipseJSONParser.extractMarkets(response)
+                # Aqui se deberian de meter en la base de datos 
+                return response
+            except json.JSONDecodeError:
+                return {'error': 'Error al decodificar JSON en la respuesta'}
+        else:
+            # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
+            return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
+
+    def getProductsByMarketplaceAndCategory(request,category, market):
+        print("Categoria", category, " Marketplace " , market)
+        pageNumber = request.GET.get('page_num') or 1
+        params = {'page_num': pageNumber}  
+
+        response = requests.get('https://marketplace.eclipse.org/taxonomy/term/{},{}/api/p'.format(category, market), params=params)
+        if response.status_code == 200:
+            try:
+                products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"Category")
+                # Aqui se deberian de meter en la base de datos
+                return response
+            except json.JSONDecodeError:
+                return {'error': 'Error al decodificar JSON en la respuesta'}
+        else:
+            # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
+            print( response.status_code)
+            return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
+
+    def getProductById(request, nodeId):
+        pageNumber = request.GET.get('page_num') or 1
+        params = {'page_num': pageNumber}  
+        response = requests.get('https://marketplace.eclipse.org/node/{}}/api/p'.format(nodeId), params=params)
+        if response.status_code == 200:
+            try:
+                info = response.text
+                product = EclipseJSONParser.EclipseJSONParser.extractSingleProduct(response)
+                return response
+            except json.JSONDecodeError:
+                return {'error': 'Error al decodificar JSON en la respuesta'}
+        else:
+            # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
+            print( response.status_code)
+            return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
+        
+    def getProductByTitle(request, title):
+        pageNumber = request.GET.get('page_num') or 1
+        params = {'page_num': pageNumber}  
+
+        response = requests.get('https://marketplace.eclipse.org/content/{}'.format(title), params=params)
+        
+        if response.status_code == 200:
+            try:
+                info = response.text
+                return response
+            except json.JSONDecodeError:
+                return {'error': 'Error al decodificar JSON en la respuesta'}
+        else:
+            # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
+            print( response.status_code)
+            return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
+        
+    def getTopFavorites(request):
+        pageNumber = request.GET.get('page_num') or 1
+        params = {'page_num': pageNumber}  
+
+        response = requests.get('https://marketplace.eclipse.org/favorites/top/api/p', params=params)
+        
+        if response.status_code == 200:
+            try:
+                products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"favorites")
+                # Aqui se deberian de meter en la base de datos
+                return response
+            except json.JSONDecodeError:
+                return {'error': 'Error al decodificar JSON en la respuesta'}
+        else:
+            # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
+            print( response.status_code)
+            return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
+        
+    def getProductByQuery(request, query):
+        pageNumber = request.GET.get('page_num') or 1
+        filters = request.GET.get('filters') 
+        params = {'page_num': pageNumber}  
+
+        response = requests.get('http://marketplace.eclipse.org/api/p/search/apachesolr_search/{}'.format(query), params=params)
+        
+        if response.status_code == 200:
+            try:
+                products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"search")
+                # Aqui se deberian de meter en la base de datos
+                return response
+            except json.JSONDecodeError:
+                return {'error': 'Error al decodificar JSON en la respuesta'}
+        else:
+            # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
+            print( response.status_code)
+            return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}

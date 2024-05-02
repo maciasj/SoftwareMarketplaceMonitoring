@@ -2,7 +2,7 @@ import json
 import requests
 from django.http import JsonResponse
 
-class serviceInterface:
+class controllerInterface:
 
     def getProductById(request, id):
         """Load in the file for extracting text."""
