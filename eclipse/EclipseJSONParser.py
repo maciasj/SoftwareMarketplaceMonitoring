@@ -43,4 +43,30 @@ class EclipseJSONParser(JSONParser):
             markets.append(market)
 
         return markets
- 
+    
+
+    def extractProducts(response):
+        products = []
+        root = ET.fromstring(response.text)
+        category= root.find('category')
+        for product_elem in category.findall('node'):
+            #Añadimos las categorias a las que pertenece
+            categories = []
+            for category in product_elem.find('categories').findall('category'):
+                categories.append(category.get('id'))
+            #Añadimos una pequeña descripcion del producto
+            short_description_elem = product_elem.find('shortdescription')
+            desc = ""
+            if short_description_elem is not None:
+                desc = short_description_elem.text.strip()
+
+            #Añadir atributos del producto
+            product = {
+                'id': product_elem.get('id'),
+                'url': product_elem.get('url'),
+                'name': product_elem.get('name'),
+                'categories': categories,
+                'shortdescription': desc,
+            }
+            products.append(product)
+        return products

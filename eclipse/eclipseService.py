@@ -10,17 +10,12 @@ class EclipseService(serviceInterface):
         params = {'page_num': pageNumber}  
         response = requests.get('https://marketplace.eclipse.org/api/p', params=params)
 
-        categories = EclipseJSONParser.EclipseJSONParser.extractCategories(response)
-        markets = EclipseJSONParser.EclipseJSONParser.extractMarkets(response)
-
-        print("Las categorias son ", categories)
-        print("Los mercados son ", markets)
-        print("Answer from the server (page ",pageNumber," )")    
-
         info = response.text
         if response.status_code == 200:
             try:
-                info = response.text
+                categories = EclipseJSONParser.EclipseJSONParser.extractCategories(response)
+                markets = EclipseJSONParser.EclipseJSONParser.extractMarkets(response)
+                # Aqui se deberian de meter en la base de datos 
                 return response
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
@@ -34,10 +29,10 @@ class EclipseService(serviceInterface):
         params = {'page_num': pageNumber}  
 
         response = requests.get('https://marketplace.eclipse.org/taxonomy/term/{},{}/api/p'.format(category, market), params=params)
-        
         if response.status_code == 200:
             try:
-                info = response.text
+                products = EclipseJSONParser.EclipseJSONParser.extractProducts(response)
+                print(products)
                 return response
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
