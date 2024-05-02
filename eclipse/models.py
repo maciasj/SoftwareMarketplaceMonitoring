@@ -1,3 +1,19 @@
+# Create your models here.
 from django.db import models
 
-# Create your models here.
+class Category(models.Model):
+    id = models.IntegerField(primary_key=True)
+    count = models.IntegerField()
+    url = models.URLField(max_length=200)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name
+    
+class Marketplace(models.Model):
+    id = models.IntegerField(primary_key=True)
+    url = models.URLField(max_length=200)
+    name = models.CharField(max_length=100)
+
+    def __str__(self):
+        return self.name

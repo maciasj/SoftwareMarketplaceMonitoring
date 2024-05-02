@@ -1,6 +1,7 @@
 import json
 import requests
 from django.http import JsonResponse
+from . import EclipseJSONParser
 from MonitoringSoftwareMarketplaces.serviceInterface import serviceInterface
 
 class EclipseService(serviceInterface):
@@ -8,7 +9,14 @@ class EclipseService(serviceInterface):
         pageNumber = request.GET.get('page_num') or 1
         params = {'page_num': pageNumber}  
         response = requests.get('https://marketplace.eclipse.org/api/p', params=params)
+
+        categories = EclipseJSONParser.EclipseJSONParser.extractCategories(response)
+        markets = EclipseJSONParser.EclipseJSONParser.extractMarkets(response)
+
+        print("Las categorias son ", categories)
+        print("Los mercados son ", markets)
         print("Answer from the server (page ",pageNumber," )")    
+
         info = response.text
         if response.status_code == 200:
             try:

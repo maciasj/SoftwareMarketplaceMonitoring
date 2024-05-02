@@ -7,3 +7,7 @@ class JSONParser:
     def extract_text(self, full_file_name: str) -> dict:
         """Extract text from the currently loaded file."""
         pass
+
+    def extractCategories(response) -> dict:
+        """Update the categories dictionary with the new data."""
+        pass
