@@ -15,7 +15,10 @@ def printproductByNodeID(request, nodeId):
     return HttpResponse(EclipseController.getProductById(request, nodeId))
 
 def printProductByTitle(request, title):
-    return HttpResponse(EclipseController.getProductByTitle(request, title))
+    return HttpResponse(EclipseController.getProductByTitle(request))
+
+def searchProduct(request):
+    return HttpResponse(EclipseController.getProductByQuery(request))
 
 def printTopFavorites(request):
     return HttpResponse(EclipseController.getTopFavorites(request))

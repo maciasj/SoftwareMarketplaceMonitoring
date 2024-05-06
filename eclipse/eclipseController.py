@@ -59,10 +59,10 @@ class EclipseController(controllerInterface):
             print( response.status_code)
             return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
         
-    def getProductByTitle(request, title):
+    def getProductByTitle(request):
         pageNumber = request.GET.get('page_num') or 1
+        title = request.GET.get('title')
         params = {'page_num': pageNumber}  
-
         response = requests.get('https://marketplace.eclipse.org/content/{}'.format(title), params=params)
         
         if response.status_code == 200:

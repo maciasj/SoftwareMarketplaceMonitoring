@@ -9,6 +9,6 @@ urlpatterns = [
     path('eclipse/markets/<int:market>/categories/<int:category>/products', printer.printProductsByMarketandCategory , name='products_by_marketplace_and_category'),
     path('eclipse/product/id/<int:nodeId>', printer.printproductByNodeID , name='products_by_nodeId'),
     path('eclipse/products/top-favorites', printer.printTopFavorites , name='top_favorite_products'),
-    path('eclipse/', printer.bienvenidoEclispe , name='index'),
-    path('eclipse/', printer.bienvenidoEclispe , name='index'),
+    path('eclipse/search/products', printer.searchProduct , name='index'),
+    path('eclipse/products/title', printer.printProductByTitle , name='index'),
 ]

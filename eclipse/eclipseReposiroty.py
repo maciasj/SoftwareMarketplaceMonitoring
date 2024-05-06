@@ -15,3 +15,15 @@ def insertMarkets(markets):
         market_obj = Marketplace(id=market['id'], url=market['url'], name=market['name'])
         print("Insertando market: ", market['name'] )
         market_obj.save()
+
+def insertProducts(products):
+    for product in products:
+        product_obj = Product(id=product['id'], 
+                              url=product['url'], 
+                              name=product['name'], 
+                              short_description=product['shortdescription'])
+        for category in product['categories']:
+            category_obj = Category.objects.get(id=category)
+            product_obj.categories.add(category_obj)
+        product_obj.save()
+        print("Insertando producto: ", product['name'] )
