@@ -1,21 +1,23 @@
 import json
 import requests
-from django.http import JsonResponse
 from . import EclipseJSONParser
 from MonitoringSoftwareMarketplaces.controllerInterface import controllerInterface
+from . import eclipseReposiroty
 
 class EclipseController(controllerInterface):
+
     def getEclipseCategoriesAndMarketplaces(request):
         pageNumber = request.GET.get('page_num') or 1
         params = {'page_num': pageNumber}  
         response = requests.get('https://marketplace.eclipse.org/api/p', params=params)
-
-        info = response.text
         if response.status_code == 200:
             try:
                 categories = EclipseJSONParser.EclipseJSONParser.extractCategories(response)
+                eclipseReposiroty.insertCategories(categories)
                 markets = EclipseJSONParser.EclipseJSONParser.extractMarkets(response)
+                eclipseReposiroty.insertMarkets(markets)
                 # Aqui se deberian de meter en la base de datos 
+                response.json = {'categories': categories, 'markets': markets}
                 return response
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}

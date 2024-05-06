@@ -12,7 +12,6 @@ class EclipseJSONParser(JSONParser):
         pass
 
     def extractCategories(response):
-        print(response.text)
         categories = []
         root = ET.fromstring(response.text)  # Parse XML string
         for market_elem in root.findall('market'):

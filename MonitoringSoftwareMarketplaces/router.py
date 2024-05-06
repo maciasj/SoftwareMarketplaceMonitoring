@@ -20,6 +20,6 @@ from django.contrib import admin
 from django.urls import include, path
 
 urlpatterns = [
-    path('softwareMarketplace/', include('eclipse.eclipseController')),
+    path('softwareMarketplace/', include('eclipse.eclipseRouter')),
     path('admin/', admin.site.urls),
 ]
