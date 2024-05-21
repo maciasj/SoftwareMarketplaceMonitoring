@@ -21,5 +21,6 @@ from django.urls import include, path
 
 urlpatterns = [
     path('softwareMarketplace/', include('eclipse.eclipseRouter')),
+    path('softwareMarketplace/', include('mozilla.mozillaRouter')),
     path('admin/', admin.site.urls),
 ]

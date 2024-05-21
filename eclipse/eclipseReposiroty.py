@@ -27,3 +27,12 @@ def insertProducts(products):
             product_obj.categories.add(category_obj)
         product_obj.save()
         print("Insertando producto: ", product['name'] )
+
+def getCategories():
+    return Category.objects.all()
+def getMarkets():
+    return Marketplace.objects.all()
+def getProducts(market, category):
+    return Product.objects.filter(categories__id=category, market__id=market)
+def getProductById(nodeId):
+    return Product.objects.get(id=nodeId)

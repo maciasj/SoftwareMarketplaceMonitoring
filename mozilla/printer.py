@@ -1,13 +1,13 @@
 from django.http import HttpResponse
 from .mozillaController import mozillaController
 
-def bienvenidoEclispe(request):
-    return HttpResponse("Bienvenido a Eclipse Marketplace")
+def printCategories(request):
+    return HttpResponse("Obteniendo todas las categorias de Mozilla", mozillaController.getCategories(request))
 
 def printCategories(request):
-    return HttpResponse("Obteniendo todas las categorias y Marketplaces de Eclipse", mozillaController.getCategories(request))
+    return HttpResponse("Obteniendo todas las etiqueras de Mozilla", mozillaController.getTags(request))
 
-def printProductsByMarketandCategory(request, category, market):
+def printByCategory(request, category, market):
     response = mozillaController.getProductsByMarketplaceAndCategory(request,category, market)
     return HttpResponse(response.text)
 
