@@ -2,10 +2,10 @@ import json
 import requests
 from . import EclipseJSONParser
 from django.http import JsonResponse
-from MonitoringSoftwareMarketplaces.controllerInterface import controllerInterface
+from MonitoringSoftwareMarketplaces.serviceInterface import serviceInterface
 from . import eclipseReposiroty
 
-class EclipseController(controllerInterface):
+class EclipseService(serviceInterface):
 
     def getCategoriesMarketplace(request):
         data = json.loads(request.body)

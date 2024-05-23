@@ -3,9 +3,9 @@ import requests
 import json
 from django.http import JsonResponse
 from . import mozillaRepository
-from MonitoringSoftwareMarketplaces.controllerInterface import controllerInterface
+from MonitoringSoftwareMarketplaces.serviceInterface import serviceInterface
 
-class mozillaController(controllerInterface):
+class mozillaService(serviceInterface):
     
     def test(request):
         data = json.loads(request.body)
@@ -121,7 +121,6 @@ class mozillaController(controllerInterface):
             # En caso de error, devolver un mensaje de error
                 return JsonResponse({"error": "No se pudo obtener el producto"}, response.status_code)
     
-
     def getProductByTitle(request, name):
         data = json.loads(request.body)
         cache = data.get('cache')
