@@ -1,52 +1,85 @@
+# Create your models here.
 from django.db import models
 
-# Create your models here.
-class Category(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100)
-    type = models.CharField(max_length=100)
-    description = models.CharField(max_length=200)
-
-    def __str__(self):
-        return self.name
-class Product(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100)
-    description = models.CharField(max_length=200)
-    url = models.CharField(max_length=200)
-    rating = models.FloatField()
-    conmpanyName = models.CharField(max_length=100)
-    price = models.FloatField()
-    tags = models.ManyToManyField('Tag')
-    categories = models.ManyToManyField('Category')
-    type = models.CharField(max_length=100)
-    marketPlace = models.CharField(max_length=100)
-
-
-    def __str__(self):
-        return self.name
-
-class Tag(models.Model):
-    id = models.IntegerField(primary_key=True)
-    name = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100)
-    description = models.CharField(max_length=200)
-
+class Marketplace(models.Model):
+    name = models.TextField(primary_key=True)
+    class Meta:
+        db_table = 'Marketplace'
     def __str__(self):
         return self.name
     
+class Category(models.Model):
+    identifier = models.IntegerField(primary_key=True)
+    name = models.TextField()
+    api_name = models.TextField()
+    url = models.URLField(max_length=200)
+    marketplace = models.TextField()
+    class Meta:
+        db_table = 'Category'
+    def __str__(self):
+        return self.name
+    
+
 class Market(models.Model):
     id = models.IntegerField(primary_key=True)
+    url = models.URLField(max_length=200)
+    name = models.TextField()
+    marketplace = models.TextField()
+    class Meta:
+        db_table = 'Market'
+    def __str__(self):
+        return self.name
+
+class CategoryInMarket(models.Model):
+    category = models.ForeignKey(Category, on_delete=models.CASCADE)
+    market = models.ForeignKey(Market, on_delete=models.CASCADE)
+    marketplace = models.TextField()
+    def __str__(self):
+        return self.name
+    class Meta:
+        db_table = 'CategoryInMarket'
+    
+class keywords(models.Model):
+    identifier = models.IntegerField(primary_key=True)
+    name = models.TextField()
+    def __str__(self):
+        return self.name
+    
+class Product(models.Model):
+    identifier = models.IntegerField(primary_key=True)
+    url = models.URLField(max_length=200)
+    name = models.TextField()
+    description = models.TextField()
+    type = models.TextField()
+    creator = models.TextField()
+    api_name = models.TextField()
+    marketplace = models.TextField()
+    class Meta:
+        db_table = 'Product'
+    def __str__(self):
+        return self.name
+
+class CategoryInProduct(models.Model):
+    product = models.IntegerField()
+    category = models.TextField()
+    marketplace = models.TextField()
+    class Meta:
+        db_table = 'CategoryInProduct'
+    def __str__(self):
+        return self.name
+    
+class keywordsInProduct(models.Model):
+    product = models.IntegerField()
+    keywords = models.TextField()
+    marketplace = models.TextField()
+    class Meta:
+        db_table = 'keywordsInProduct'
+    def __str__(self):
+        return self.name    
+    
+class Test(models.Model):
     name = models.CharField(max_length=100)
-    url = models.CharField(max_length=100)
-    slug = models.CharField(max_length=100)
 
-    def __str__(self):
-        return self.name
-class Type(models.Model):
-    name = models.CharField(max_length=100, primary_key=True)
 
-    def __str__(self):
-        return self.name
+def __str__(self):
+    return self.name

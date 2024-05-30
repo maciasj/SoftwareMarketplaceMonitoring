@@ -18,9 +18,10 @@ class EclipseJSONParser(JSONParser):
             for category in market_elem.findall('category'):
                 category = {
                     'id': category.get('id'),
-                    'count': category.get('count'),
                     'url': category.get('url'),
-                    'name': category.get('name')
+                    'name': category.get('name'),
+                    'market': market_elem.get('id'),
+                    'marketplace': 'eclipse'
                 }
                 categories.append(category)
 
@@ -34,7 +35,8 @@ class EclipseJSONParser(JSONParser):
             market = {
                 'id': market_elem.get('id'),
                 'url': market_elem.get('url'),
-                'name': market_elem.get('name')
+                'name': market_elem.get('name'),
+                'marketplace': 'eclipse'
             }
             markets.append(market)
 
@@ -47,39 +49,62 @@ class EclipseJSONParser(JSONParser):
         category= root.find(typeOfSearch)
         for product_elem in category.findall('node'):
             #Añadimos las categorias a las que pertenece
+            #Añadimos las categorias a las que pertenece
             categories = []
-            for category in product_elem.find('categories').findall('category'):
-                categories.append(category.get('id'))
+            if(product_elem.find('categories')):
+                for category in product_elem.find('categories').findall('category'):
+                    categories.append(category.get('name'))
+        
+            #Añadimos las categorias a las que pertenece
+            tags = []
+            if(product_elem.find('tags')):
+                for tag in product_elem.find('tags').findall('tag'):
+                    tags.append(tag.get('name'))
+            
             #Añadimos una pequeña descripcion del producto
-            short_description_elem = product_elem.find('shortdescription')
+            description_elem = product_elem.find('body')
             desc = ""
-            if short_description_elem is not None:
-                desc = short_description_elem.text.strip()
-
+            if description_elem is not None:
+                desc = description_elem.text.strip()
             #Añadir atributos del producto
             product = {
-                'id': product_elem.get('id'),
-                'url': product_elem.get('url'),
-                'name': product_elem.get('name'),
-                'categories': categories,
-                'shortdescription': desc,
-            }
+            'id': product_elem.get('id'),
+            'url': product_elem.get('url'),
+            'name': product_elem.get('name'),
+            'categories': categories,
+            'tags': tags,
+            'description': desc,
+            'type': product_elem.find('type').text,
+            'autor': product_elem.find('owner').text,
+            'api_name': "",
+            'marketplace': 'eclipse'
+        }
             products.append(product)
+        print("Conjunto productos", products)
         return products
     
     def extractSingleProduct(response):
         product = {}
         root = ET.fromstring(response.text)
         product_elem = root.find('node')
+       
         #Añadimos las categorias a las que pertenece
         categories = []
         for category in product_elem.find('categories').findall('category'):
-            categories.append(category.get('id'))
+            print(category.get('name'))
+            categories.append(category.get('name'))
+       
+        #Añadimos las categorias a las que pertenece
+        tags = []
+        for tag in product_elem.find('tags').findall('tag'):
+            print("tag" ,tag.get('name'))
+            tags.append(tag.get('name'))
+        
         #Añadimos una pequeña descripcion del producto
-        short_description_elem = product_elem.find('shortdescription')
+        description_elem = product_elem.find('body')
         desc = ""
-        if short_description_elem is not None:
-            desc = short_description_elem.text.strip()
+        if description_elem is not None:
+            desc = description_elem.text.strip()
 
         #Añadir atributos del producto
         product = {
@@ -87,6 +112,11 @@ class EclipseJSONParser(JSONParser):
             'url': product_elem.get('url'),
             'name': product_elem.get('name'),
             'categories': categories,
-            'shortdescription': desc,
+            'tags': tags,
+            'description': desc,
+            'type': product_elem.find('type').text,
+            'autor': product_elem.find('owner').text,
+            'api_name': "",
+            'marketplace': 'eclipse'
         }
         return product

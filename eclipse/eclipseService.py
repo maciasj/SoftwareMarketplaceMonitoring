@@ -5,6 +5,7 @@ from django.http import JsonResponse
 from MonitoringSoftwareMarketplaces.serviceInterface import serviceInterface
 from . import eclipseReposiroty
 
+
 class EclipseService(serviceInterface):
 
     def getCategoriesMarketplace(request):
@@ -22,9 +23,10 @@ class EclipseService(serviceInterface):
         if response.status_code == 200:
             try:
                 categories = EclipseJSONParser.EclipseJSONParser.extractCategories(response)
-                #eclipseReposiroty.insertCategories(categories)
+                eclipseReposiroty.insertCategories(categories)
                 markets = EclipseJSONParser.EclipseJSONParser.extractMarkets(response)
-                #eclipseReposiroty.insertMarkets(markets)
+                eclipseReposiroty.insertMarkets(markets)
+                #eclipseReposiroty.insertCategoryInMarket(categories)
                 # Aqui se deberian de meter en la base de datos 
                 response.json = {'categories': categories, 'markets': markets}
                 return JsonResponse(response.json, safe=False,status=202)
@@ -48,7 +50,9 @@ class EclipseService(serviceInterface):
         response = requests.get('https://marketplace.eclipse.org/taxonomy/term/{},{}/api/p'.format(category, market), params=params)
         if response.status_code == 200:
             try:
-                products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"Category")
+                products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"category")
+                for product in products:
+                    eclipseReposiroty.insertSingleProduct(product)
                 # Aqui se deberian de meter en la base de datos
                 return JsonResponse(products, safe=False,status=202)
             except json.JSONDecodeError:
@@ -64,14 +68,17 @@ class EclipseService(serviceInterface):
         params = {'page_num': pageNumber}  
         if(cache):
             product = eclipseReposiroty.getProductById(nodeId)
+            print("PRODUCTOOOO", product)
             return JsonResponse(product, safe=False,status=201)
         # Si no se especifica el parámetro cache, o si es falso, se hace la petición a la API
-        response = requests.get('https://marketplace.eclipse.org/node/{}}/api/p'.format(nodeId), params=params)
+        response = requests.get('https://marketplace.eclipse.org/node/{}/api/p'.format(nodeId), params=params)
         if response.status_code == 200:
             try:
                 info = response.text
                 product = EclipseJSONParser.EclipseJSONParser.extractSingleProduct(response)
-                return response
+                print(product)
+                eclipseReposiroty.insertSingleProduct(product)
+                return JsonResponse(product, safe=False,status=202)
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
         else:
