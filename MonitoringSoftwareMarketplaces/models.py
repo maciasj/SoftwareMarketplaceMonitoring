@@ -1,12 +1,7 @@
 # Create your models here.
 from django.db import models
 
-class Marketplace(models.Model):
-    name = models.TextField(primary_key=True)
-    class Meta:
-        db_table = 'Marketplace'
-    def __str__(self):
-        return self.name
+
     
 class Category(models.Model):
     identifier = models.IntegerField(primary_key=True)
@@ -19,9 +14,24 @@ class Category(models.Model):
     def __str__(self):
         return self.name
     
+class CategoryInProduct(models.Model):
+    product = models.IntegerField()
+    category = models.TextField()
+    marketplace = models.TextField()
+    class Meta:
+        db_table = 'CategoryInProduct'
+    def __str__(self):
+        return self.name
+        
+class Marketplace(models.Model):
+    name = models.TextField(primary_key=True)
+    class Meta:
+        db_table = 'Marketplace'
+    def __str__(self):
+        return self.name    
 
 class Market(models.Model):
-    id = models.IntegerField(primary_key=True)
+    identifier = models.IntegerField(primary_key=True)
     url = models.URLField(max_length=200)
     name = models.TextField()
     marketplace = models.TextField()
@@ -59,21 +69,13 @@ class Product(models.Model):
     def __str__(self):
         return self.name
 
-class CategoryInProduct(models.Model):
-    product = models.IntegerField()
-    category = models.TextField()
-    marketplace = models.TextField()
-    class Meta:
-        db_table = 'CategoryInProduct'
-    def __str__(self):
-        return self.name
-    
+
 class keywordsInProduct(models.Model):
     product = models.IntegerField()
     keywords = models.TextField()
     marketplace = models.TextField()
     class Meta:
-        db_table = 'keywordsInProduct'
+        db_table = 'KeywordsInProduct'
     def __str__(self):
         return self.name    
     

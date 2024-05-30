@@ -17,7 +17,7 @@ class EclipseJSONParser(JSONParser):
         for market_elem in root.findall('market'):
             for category in market_elem.findall('category'):
                 category = {
-                    'id': category.get('id'),
+                    'identifier': category.get('id'),
                     'url': category.get('url'),
                     'name': category.get('name'),
                     'market': market_elem.get('id'),
@@ -33,7 +33,7 @@ class EclipseJSONParser(JSONParser):
         root = ET.fromstring(response.text)  # Parse XML string
         for market_elem in root.findall('market'):
             market = {
-                'id': market_elem.get('id'),
+                'identifier': market_elem.get('id'),
                 'url': market_elem.get('url'),
                 'name': market_elem.get('name'),
                 'marketplace': 'eclipse'
@@ -46,8 +46,8 @@ class EclipseJSONParser(JSONParser):
     def extractProductsByParameter(response, typeOfSearch):
         products = []
         root = ET.fromstring(response.text)
-        category= root.find(typeOfSearch)
-        for product_elem in category.findall('node'):
+        element = root.find(typeOfSearch)
+        for product_elem in element.findall('node'):
             #Añadimos las categorias a las que pertenece
             #Añadimos las categorias a las que pertenece
             categories = []
@@ -68,14 +68,14 @@ class EclipseJSONParser(JSONParser):
                 desc = description_elem.text.strip()
             #Añadir atributos del producto
             product = {
-            'id': product_elem.get('id'),
+            'identifier': product_elem.get('id'),
             'url': product_elem.get('url'),
             'name': product_elem.get('name'),
             'categories': categories,
-            'tags': tags,
+            'keywords': tags,
             'description': desc,
             'type': product_elem.find('type').text,
-            'autor': product_elem.find('owner').text,
+            'creator': product_elem.find('owner').text,
             'api_name': "",
             'marketplace': 'eclipse'
         }
@@ -108,14 +108,14 @@ class EclipseJSONParser(JSONParser):
 
         #Añadir atributos del producto
         product = {
-            'id': product_elem.get('id'),
+            'identifier': product_elem.get('id'),
             'url': product_elem.get('url'),
             'name': product_elem.get('name'),
             'categories': categories,
-            'tags': tags,
+            'keywords': tags,
             'description': desc,
             'type': product_elem.find('type').text,
-            'autor': product_elem.find('owner').text,
+            'creator': product_elem.find('owner').text,
             'api_name': "",
             'marketplace': 'eclipse'
         }

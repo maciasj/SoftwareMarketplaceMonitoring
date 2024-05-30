@@ -68,7 +68,6 @@ class EclipseService(serviceInterface):
         params = {'page_num': pageNumber}  
         if(cache):
             product = eclipseReposiroty.getProductById(nodeId)
-            print("PRODUCTOOOO", product)
             return JsonResponse(product, safe=False,status=201)
         # Si no se especifica el parámetro cache, o si es falso, se hace la petición a la API
         response = requests.get('https://marketplace.eclipse.org/node/{}/api/p'.format(nodeId), params=params)
@@ -76,16 +75,15 @@ class EclipseService(serviceInterface):
             try:
                 info = response.text
                 product = EclipseJSONParser.EclipseJSONParser.extractSingleProduct(response)
-                print(product)
                 eclipseReposiroty.insertSingleProduct(product)
                 return JsonResponse(product, safe=False,status=202)
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
         else:
             # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
-            print( response.status_code)
             return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
-        
+
+    #Eliminar porque no tiene sentido    
     def getProductByTitle(request):
         pageNumber = request.GET.get('page_num') or 1
         title = request.GET.get('title')
@@ -100,7 +98,6 @@ class EclipseService(serviceInterface):
                 return {'error': 'Error al decodificar JSON en la respuesta'}
         else:
             # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
-            print( response.status_code)
             return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
         
     def getTopFavorites(request):
@@ -112,30 +109,31 @@ class EclipseService(serviceInterface):
         if response.status_code == 200:
             try:
                 products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"favorites")
-                # Aqui se deberian de meter en la base de datos
-                return response
+                for product in products:
+                    eclipseReposiroty.insertSingleProduct(product)
+                return JsonResponse(products, safe=False,status=202)
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
         else:
             # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
-            print( response.status_code)
             return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
         
-    def getProductByQuery(request, query):
-        pageNumber = request.GET.get('page_num') or 1
-        filters = request.GET.get('filters') 
-        params = {'page_num': pageNumber}  
-
-        response = requests.get('http://marketplace.eclipse.org/api/p/search/apachesolr_search/{}'.format(query), params=params)
-        
+    def getProductByQuery(request):
+        data = json.loads(request.body)
+        cache = data.get('cache')
+        query = data.get('query')
+        if(cache):
+            products = eclipseReposiroty.getProductsByQuery(query)
+            return JsonResponse(products, safe=False,status=201)
+        response = requests.get('http://marketplace.eclipse.org/api/p/search/apachesolr_search/{}'.format(query), params=data)
         if response.status_code == 200:
             try:
                 products = EclipseJSONParser.EclipseJSONParser.extractProductsByParameter(response,"search")
-                # Aqui se deberian de meter en la base de datos
-                return response
+                for product in products:
+                    eclipseReposiroty.insertSingleProduct(product)
+                return JsonResponse(products, safe=False,status=202)
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
         else:
             # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
-            print( response.status_code)
             return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
