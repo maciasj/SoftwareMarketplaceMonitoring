@@ -1,6 +1,5 @@
 from MonitoringSoftwareMarketplaces.models import *
-import json
-from django.forms.models import model_to_dict
+
 
 
 def testUserInsert():
@@ -74,7 +73,7 @@ def insertSingleProduct(product):
             print("Insertando Tag en producto: ", keywords, "nombre  " , product['name'] )
 
 def getCategories():
-    categories = Category.objects.all()
+    categories = Category.objects.filter(marketplace="eclipse")
     serialized_categories = []
     for category in categories:
         category = {

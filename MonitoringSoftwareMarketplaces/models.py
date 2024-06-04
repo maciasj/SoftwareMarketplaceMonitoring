@@ -8,7 +8,9 @@ class Category(models.Model):
     name = models.TextField()
     api_name = models.TextField()
     url = models.URLField(max_length=200)
+    description = models.TextField()
     marketplace = models.TextField()
+    type = models.TextField()
     class Meta:
         db_table = 'Category'
     def __str__(self):
@@ -49,9 +51,12 @@ class CategoryInMarket(models.Model):
     class Meta:
         db_table = 'CategoryInMarket'
     
-class keywords(models.Model):
+class Keyword(models.Model):
     identifier = models.IntegerField(primary_key=True)
     name = models.TextField()
+    marketplace = models.TextField()
+    class Meta:
+        db_table = 'Keywords'
     def __str__(self):
         return self.name
     

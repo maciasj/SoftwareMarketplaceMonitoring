@@ -1,0 +1,163 @@
+[
+    {
+      "Name": "Alerts & Updates",
+      "Slug": "alerts-updates",
+      "Type": "extension"
+    },
+    {
+      "Name": "Appearance",
+      "Slug": "appearance",
+      "Type": "extension"
+    },
+    {
+      "Name": "Bookmarks",
+      "Slug": "bookmarks",
+      "Type": "extension"
+    },
+    {
+      "Name": "Download Management",
+      "Slug": "download-management",
+      "Type": "extension"
+    },
+    {
+      "Name": "Feeds, News & Blogging",
+      "Slug": "feeds-news-blogging",
+      "Type": "extension"
+    },
+    {
+      "Name": "Games & Entertainment",
+      "Slug": "games-entertainment",
+      "Type": "extension"
+    },
+    {
+      "Name": "Language Support",
+      "Slug": "language-support",
+      "Type": "extension"
+    },
+    {
+      "Name": "Photos, Music & Videos",
+      "Slug": "photos-music-videos",
+      "Type": "extension"
+    },
+    {
+      "Name": "Privacy & Security",
+      "Slug": "privacy-security",
+      "Type": "extension"
+    },
+    {
+      "Name": "Search Tools",
+      "Slug": "search-tools",
+      "Type": "extension"
+    },
+    {
+      "Name": "Shopping",
+      "Slug": "shopping",
+      "Type": "extension"
+    },
+    {
+      "Name": "Social & Communication",
+      "Slug": "social-communication",
+      "Type": "extension"
+    },
+    {
+      "Name": "Tabs",
+      "Slug": "tabs",
+      "Type": "extension"
+    },
+    {
+      "Name": "Web Development",
+      "Slug": "web-development",
+      "Type": "extension"
+    },
+    {
+      "Name": "Other",
+      "Slug": "other",
+      "Type": "extension"
+    },
+    {
+      "Name": "General",
+      "Slug": "general",
+      "Type": "dictionary"
+    },
+    {
+      "Name": "General",
+      "Slug": "general",
+      "Type": "language"
+    },
+    {
+      "Name": "Abstract",
+      "Slug": "abstract",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Causes",
+      "Slug": "causes",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Fashion",
+      "Slug": "fashion",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Film and TV",
+      "Slug": "film-and-tv",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Firefox",
+      "Slug": "firefox",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Foxkeh",
+      "Slug": "foxkeh",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Holiday",
+      "Slug": "holiday",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Music",
+      "Slug": "music",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Nature",
+      "Slug": "nature",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Other",
+      "Slug": "other",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Scenery",
+      "Slug": "scenery",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Seasonal",
+      "Slug": "seasonal",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Solid",
+      "Slug": "solid",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Sports",
+      "Slug": "sports",
+      "Type": "statictheme"
+    },
+    {
+      "Name": "Websites",
+      "Slug": "websites",
+      "Type": "statictheme"
+    }
+  ]
+  
