@@ -61,7 +61,7 @@ class Keyword(models.Model):
         return self.name
     
 class Product(models.Model):
-    identifier = models.IntegerField(primary_key=True)
+    identifier = models.CharField(primary_key=True, max_length=150)
     url = models.URLField(max_length=200)
     name = models.TextField()
     description = models.TextField()

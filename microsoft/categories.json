@@ -1,0 +1,29 @@
+[
+ 
+    {"name": "Books & reference", "api_name": "Books+%26+reference"},
+    {"name": "Business", "api_name": "Business"},
+    {"name": "Developer tools", "api_name": "Developer+tools"},
+    {"name": "Education", "api_name": "Education"},
+    {"name": "Entertainment", "api_name": "Entertainment"},
+    {"name": "Food & dining", "api_name": "Food+%26+dining"},
+    {"name": "Government & politics", "api_name": "Government+%26+politics"},
+    {"name": "Health & fitness", "api_name": "Health+%26+fitness"},
+    {"name": "Kids & family", "api_name": "Kids+%26+family"},
+    {"name": "Lifestyle", "api_name": "Lifestyle"},
+    {"name": "Medical", "api_name": "Medical"},
+    {"name": "Multimedia design", "api_name": "Multimedia+design"},
+    {"name": "Music", "api_name": "Music"},
+    {"name": "Navigation & maps", "api_name": "Navigation+%26+maps"},
+    {"name": "News & weather", "api_name": "News+%26+weather"},
+    {"name": "Personal finance", "api_name": "Personal+finance"},
+    {"name": "Personalization", "api_name": "Personalization"},
+    {"name": "Photo & video", "api_name": "Photo+%26+video"},
+    {"name": "Productivity", "api_name": "Productivity"},
+    {"name": "Security", "api_name": "Security"},
+    {"name": "Shopping", "api_name": "Shopping"},
+    {"name": "Social", "api_name": "Social"},
+    {"name": "Sports", "api_name": "Sports"},
+    {"name": "Travel", "api_name": "Travel"},
+    {"name": "Utilities & tools", "api_name": "Utilities+%26+tools"}
+]
+
