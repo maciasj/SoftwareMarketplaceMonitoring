@@ -2,16 +2,8 @@ from MonitoringSoftwareMarketplaces.JSONParser import JSONParser
 import xml.etree.ElementTree as ET
 
 class EclipseJSONParser(JSONParser):
-    """Extract text from a PDF"""
-    def load_data_source(self, path: str, file_name: str):
-        """Overrides InformalInterface.load_data_source()"""
-        pass
 
-    def read_data(self, full_file_path: str):
-        """Overrides InformalInterface.read_data()"""
-        pass
-
-    def extractCategories(response):
+    def parseCategories(response):
         categories = []
         root = ET.fromstring(response.text)  # Parse XML string
         for market_elem in root.findall('market'):
@@ -28,7 +20,7 @@ class EclipseJSONParser(JSONParser):
         return categories
 
     
-    def extractMarkets(response):
+    def parseMarkets(response):
         markets = []
         root = ET.fromstring(response.text)  # Parse XML string
         for market_elem in root.findall('market'):
@@ -43,7 +35,7 @@ class EclipseJSONParser(JSONParser):
         return markets
     
     
-    def extractProductsByParameter(response, typeOfSearch):
+    def parseProducts(response, typeOfSearch):
         products = []
         root = ET.fromstring(response.text)
         element = root.find(typeOfSearch)

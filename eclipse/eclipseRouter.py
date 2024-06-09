@@ -9,4 +9,6 @@ urlpatterns = [
     path('eclipse/products/top-favorites', EclipseService.getTopFavorites , name='top_favorite_products'),
     path('eclipse/search/products', EclipseService.getProductByQuery , name='index'),
     path('eclipse/products/title', EclipseService.getProductByTitle , name='index'),
+    path('eclipse/add-products', EclipseService.addProducts , name='index'),
+    path('eclipse/delete/product/<int:id>', EclipseService.deleteProduct , name='index'),
 ]

@@ -30,7 +30,7 @@ class microsoftService(serviceInterface):
         cache = request.GET.get('cache')
         query = request.GET.get('query')
         match = request.GET.get('match')
-        if(cache=="0"):
+        if(cache=="1"):
             pruducts = microsoftRepository.searchProduct(query)
             if pruducts is None:
                 return JsonResponse({"error": "No se pudo encontrar el producto"}, status=404)
@@ -56,7 +56,7 @@ class microsoftService(serviceInterface):
     
     def getProductById(request, id):
         cache = request.GET.get('cache')
-        if(cache=="0"):
+        if(cache=="1"):
             product = microsoftRepository.getProductById(id)
             if product is None:
                 return JsonResponse({"error": "No se pudo encontrar el producto"}, status=404)
