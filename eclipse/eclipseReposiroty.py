@@ -102,7 +102,7 @@ def getMarkets():
 
 
 
-def getProducts(market, category):
+def getProductsByCategory(market, category):
     try:
         categoryName = Category.objects.get(identifier=category).name
     except Category.DoesNotExist:

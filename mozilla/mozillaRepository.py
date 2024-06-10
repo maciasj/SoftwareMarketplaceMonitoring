@@ -1,7 +1,6 @@
 from MonitoringSoftwareMarketplaces.models import *
 
-def getMozilla():
-    return "mozilla"
+MARKETPLACE="mozilla"
 
 def insertCategories(categories):
     for category in categories:
@@ -92,9 +91,17 @@ def getProductByKewyword(Kewyword):
         object_products.append(product)
     return object_products
 
-def getProductByCategory(category):
-    products = Product.objects.filter(category.contains(category))
-    return products
+def getProductByCategory(categoryName):
+    try:
+        categoryApiName = Category.objects.get(name=categoryName, marketplace=MARKETPLACE).api_name
+        productsIds = CategoryInProduct.objects.filter(category=categoryApiName,marketplace=MARKETPLACE).values_list('product', flat=True)
+        print("Productos: ", productsIds)
+        json_products = []
+        for product in list(productsIds):
+            json_products.append(getProductById(product))
+        return json_products
+    except Product.DoesNotExist:    
+        return 2
 
 def getCategoryInfo(category):
     newcategory = Category.objects.filter(name=category, marketplace="mozilla").values('name', 'api_name')
@@ -112,21 +119,21 @@ def insertSingleProduct(product):
                           type=product['type'], 
                           creator=product['creator'],
                           api_name=product['api_name'], 
-                          marketplace=getMozilla())
+                          marketplace=MARKETPLACE)
 
     print("Insertando producto: ", product_obj.identifier)
     product_obj.description = product_obj.description.encode('utf-8')
     product_obj.save()
     #Insertar categorias en producto
     for category in product['categories']:
-        category_in_product = CategoryInProduct(product=product['identifier'], category=category, marketplace=getMozilla())
+        category_in_product = CategoryInProduct(product=product['identifier'], category=category, marketplace=MARKETPLACE)
         if(not CategoryInProduct.objects.filter(product=product['identifier'], category=category).exists()):
             category_in_product.save()
             print("Insertando categoria en producto: ", category)
 
     #Insertar tags en producto    
     for keywords in product['keywords']:
-        keywords_in_product = keywordsInProduct(product=product['identifier'], keywords=keywords, marketplace=getMozilla())
+        keywords_in_product = keywordsInProduct(product=product['identifier'], keywords=keywords, marketplace=MARKETPLACE)
         if(not keywordsInProduct.objects.filter(product=product['identifier'], keywords=keywords).exists()):
             keywords_in_product.save()
             print("Insertando Tag en producto: ", keywords)
@@ -150,3 +157,7 @@ def getProductByQuery(query):
         object_products.append(product)
     return object_products
     
+def deleteProduct(id):
+    product = Product.objects.get(identifier=id)
+    product.delete()
+    return True

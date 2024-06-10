@@ -37,7 +37,7 @@ class EclipseService(serviceInterface):
         pageNumber = request.GET.get('page_num') or 1
         params = {'page_num': pageNumber}  
         if(cache == "1"):
-            products = eclipseReposiroty.getProducts(market, category)
+            products = eclipseReposiroty.getProductsByCategory(market, category)
             return JsonResponse(products, safe=False,status=200)
         # Si no se especifica el parámetro cache, o si es falso, se hace la petición a la API
         response = requests.get('https://marketplace.eclipse.org/taxonomy/term/{},{}/api/p'.format(category, market), params=params)
