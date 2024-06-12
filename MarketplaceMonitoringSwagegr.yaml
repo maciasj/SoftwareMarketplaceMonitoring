@@ -839,7 +839,7 @@ components:
         marketplace:
           type: string
           description: Marketplace of the product
-    KeywordsInProduct:
+    ProductKeyword:
       required:
       - keywords
       - marketplace

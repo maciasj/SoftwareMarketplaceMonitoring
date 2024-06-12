@@ -1,0 +1,696 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/JOELMACIAS/RawMarketplaces/1.0.0
+info:
+  version: "1.0.0"
+  title: Sample Access Code Flow OAuth2 Project
+  description: >-
+    This is an example of using OAuth2 Access Code Flow in a specification to
+    describe security to your API.
+
+paths:
+
+    /addons/categories/:
+      get:
+        summary: Obtiene categorías de addons
+        description: Retorna una lista de categorías de addons disponibles en Mozilla.
+        tags:
+          - Mozilla
+        responses:
+          '200':
+            description: Lista de categorías de addons
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/CategoriesResponse'
+                  
+    /discovery/:
+      get:
+        summary: Descubrimiento de addons
+        description: Retorna una lista de addons recomendados para el usuario.
+        tags:
+          - Mozilla
+        responses:
+          '200':
+            description: Lista de addons recomendados
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/NodeResponse'
+    /addons/tags/:
+      get:
+        summary: Obtener etiquetas de complementos
+        description: Devuelve una lista de etiquetas disponibles para los complementos.
+        tags:
+          - Mozilla
+        responses:
+          '200':
+            description: Lista de etiquetas obtenida con éxito
+            content:
+              application/json:
+                schema:
+                  type: array
+                  items:
+                    type: string
+    /addons/search/:
+      get:
+        summary: Buscar complementos
+        description: Busca complementos en Mozilla Add-ons con varios parámetros de búsqueda.
+        tags:
+          - Mozilla
+        parameters:
+          - name: q
+            in: query
+            description: Término de búsqueda
+            required: false
+            schema:
+              type: string
+          - name: app
+            in: query
+            description: Aplicación para la que se busca el complemento
+            required: false
+            schema:
+              type: string
+              enum: [firefox, android, thunderbird]
+          - name: author
+            in: query
+            description: Autor del complemento
+            required: false
+            schema:
+              type: string
+          - name: category
+            in: query
+            description: Categoría del complemento
+            required: false
+            schema:
+              type: string
+          - name: color
+            in: query
+            description: Color del complemento
+            required: false
+            schema:
+              type: string
+          - name: lang
+            in: query
+            description: Idioma del complemento
+            required: false
+            schema:
+              type: string
+          - name: page
+            in: query
+            description: Número de página de los resultados de la búsqueda
+            required: false
+            schema:
+              type: integer
+          - name: page_size
+            in: query
+            description: Tamaño de la página de los resultados de la búsqueda
+            required: false
+            schema:
+              type: integer
+          - name: tag
+            in: query
+            description: Etiqueta del complemento
+            required: false
+            schema:
+              type: string
+          - name: type
+            in: query
+            description: Tipo de complemento
+            required: false
+            schema:
+              type: string
+              enum: [extension, statictheme, dictionary, language]
+          - name: users
+            in: query
+            description: Número de usuarios del complemento
+            required: false
+            schema:
+              type: integer
+          - name: guid
+            in: query
+            description: GUID del complemento
+            required: false
+            schema:
+              type: string
+        responses:
+          '200':
+            description: Resultados de la búsqueda obtenidos con éxito
+            content:
+              application/json:
+                schema:
+                  $ref: '#/components/schemas/SearchRespose' 
+
+                              
+components:
+  schemas:
+    CategoriesResponse:
+      type: array
+      items:
+          type: object
+          properties:
+            id:
+              type: integer
+              example: 1
+            name:
+              type: string
+              example: "Feeds, News & Blogging"
+            slug:
+              type: string
+              example: "feeds-news-blogging"
+            misc:
+              type: boolean
+              example: false
+            type:
+              type: string
+              example: "extension"
+            weight:
+              type: integer
+              example: 0
+            description:
+              type: string
+              example: "Download Firefox extensions that remove clutter so you can stay up-to-date on social media, catch up on blogs, RSS feeds, reduce eye strain, and more."
+    NodeResponse:
+      type: object
+      properties:
+        results:
+          type: array
+          items:
+            type: object
+            properties:
+              description_text:
+                type: object
+                properties:
+                  en-US:
+                    type: string
+                    example: "See an interesting picture on the web and want to learn more about it? Try this image search tool."
+              addon:
+                type: object
+                properties:
+                  id:
+                    type: integer
+                    example: 2709212
+                  authors:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 932427
+                        name:
+                          type: string
+                          example: "Scarletta"
+                        url:
+                          type: string
+                          example: "https://addons.mozilla.org/en-US/firefox/user/932427/"
+                        username:
+                          type: string
+                          example: "scarlettana"
+                        picture_url:
+                          type: string
+                          example: "https://addons.mozilla.org/user-media/userpics/27/2427/932427/932427.png?modified=1619830792"
+                  average_daily_users:
+                    type: integer
+                    example: 29435
+                  current_version:
+                    type: object
+                    properties:
+                      id:
+                        type: integer
+                        example: 5255664
+                      compatibility:
+                        type: object
+                        properties:
+                          firefox:
+                            type: object
+                            properties:
+                              min:
+                                type: string
+                                example: "53.0"
+                              max:
+                                type: string
+                                example: "*"
+                      is_strict_compatibility_enabled:
+                        type: boolean
+                        example: false
+                      file:
+                        type: object
+                        properties:
+                          id:
+                            type: integer
+                            example: 3800023
+                          created:
+                            type: string
+                            example: "2021-06-22T13:56:10Z"
+                          hash:
+                            type: string
+                            example: "sha256:5445fa25c26e85fb9adbb163cf2b5eb9a7edd0421c03d312f02ced90b28fd6d8"
+                          is_mozilla_signed_extension:
+                            type: boolean
+                            example: false
+                          size:
+                            type: integer
+                            example: 486368
+                          status:
+                            type: string
+                            example: "public"
+                          url:
+                            type: string
+                            example: "https://addons.mozilla.org/firefox/downloads/file/3800023/aurora_borealis_delights-1.1.xpi"
+                          permissions:
+                            type: array
+                            items:
+                              type: string
+                          optional_permissions:
+                            type: array
+                            items:
+                              type: string
+                          host_permissions:
+                            type: array
+                            items:
+                              type: string
+                  guid:
+                    type: string
+                    example: "{9ff61251-d2ce-4063-b0c0-da78064ce0a7}"
+                  icon_url:
+                    type: string
+                    example: "https://addons.mozilla.org/static-server/img/addon-icons/default-64.d144b50f2bb8.png"
+                  name:
+                    type: object
+                    properties:
+                      en-US:
+                        type: string
+                        example: "Aurora Borealis Delights"
+                  previews:
+                    type: array
+                    items:
+                      type: object
+                      properties:
+                        id:
+                          type: integer
+                          example: 3852971
+                        caption:
+                          type: string
+                        image_size:
+                          type: array
+                          items:
+                            type: integer
+                          example: [680, 92]
+                        image_url:
+                          type: string
+                          example: "https://addons.mozilla.org/user-media/version-previews/full/3852/3852971.png?modified=1624370171"
+                        position:
+                          type: integer
+                          example: 0
+                        thumbnail_size:
+                          type: array
+                          items:
+                            type: integer
+                          example: [473, 64]
+                        thumbnail_url:
+                          type: string
+                          example: "https://addons.mozilla.org/user-media/version-previews/thumbs/3852/3852971.png?modified=1624370171"
+                  ratings:
+                    type: object
+                    properties:
+                      average:
+                        type: number
+                        format: float
+                        example: 4.8269
+                      bayesian_average:
+                        type: number
+                        format: float
+                        example: 4.702227735626875
+                      count:
+                        type: integer
+                        example: 52
+                      text_count:
+                        type: integer
+                        example: 11
+                  slug:
+                    type: string
+                    example: "aurora-borealis-delights"
+                  type:
+                    type: string
+                    example: "statictheme"
+                  url:
+                    type: string
+                    example: "https://addons.mozilla.org/en-US/firefox/addon/aurora-borealis-delights/"
+              is_recommendation:
+                type: boolean
+                example: false
+        count:
+          type: integer
+          example: 7
+          
+    SearchRespose:
+      type: object
+      properties:
+        page_size:
+          type: integer
+          example: 25
+        page_count:
+          type: integer
+          example: 196
+        count:
+          type: integer
+          example: 4876
+        next:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/api/v5/addons/search/?category=web-development&page=2&type=extension"
+        previous:
+          type: string
+          format: uri
+          nullable: true
+          example: null
+        results:
+          type: array
+          items:
+            $ref: '#/components/schemas/Addon'
+    Addon:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 855413
+        authors:
+          type: array
+          items:
+            $ref: '#/components/schemas/Author'
+        average_daily_users:
+          type: integer
+          example: 1156057
+        categories:
+          type: array
+          items:
+            type: string
+        contributions_url:
+          $ref: '#/components/schemas/ContributionsUrl'
+        created:
+          type: string
+          format: date-time
+          example: "2017-09-19T07:03:00Z"
+        current_version:
+          $ref: '#/components/schemas/CurrentVersion'
+        default_locale:
+          type: string
+          example: "en-US"
+        description:
+          type: object
+          additionalProperties:
+            type: string
+        developer_comments:
+          type: string
+          nullable: true
+        edit_url:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/en-US/developers/addon/darkreader/edit"
+        guid:
+          type: string
+          example: "addon@darkreader.org"
+        has_eula:
+          type: boolean
+        has_privacy_policy:
+          type: boolean
+        homepage:
+          $ref: '#/components/schemas/Homepage'
+        icon_url:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/user-media/addon_icons/855/855413-64.png?modified=3f34e276"
+        icons:
+          type: object
+          properties:
+            32:
+              type: string
+              format: uri
+              example: "https://addons.mozilla.org/user-media/addon_icons/855/855413-32.png?modified=3f34e276"
+            64:
+              type: string
+              format: uri
+              example: "https://addons.mozilla.org/user-media/addon_icons/855/855413-64.png?modified=3f34e276"
+            128:
+              type: string
+              format: uri
+              example: "https://addons.mozilla.org/user-media/addon_icons/855/855413-128.png?modified=3f34e276"
+        is_disabled:
+          type: boolean
+        is_experimental:
+          type: boolean
+        last_updated:
+          type: string
+          format: date-time
+          example: "2024-06-03T17:37:38Z"
+        name:
+          type: object
+          additionalProperties:
+            type: string
+        previews:
+          type: array
+          items:
+            $ref: '#/components/schemas/Preview'
+        promoted:
+          $ref: '#/components/schemas/Promoted'
+        ratings:
+          $ref: '#/components/schemas/Ratings'
+        ratings_url:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/en-US/firefox/addon/darkreader/reviews/"
+        requires_payment:
+          type: boolean
+        review_url:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/en-US/reviewers/review/855413"
+        slug:
+          type: string
+          example: "darkreader"
+        status:
+          type: string
+          example: "public"
+        summary:
+          type: object
+          additionalProperties:
+            type: string
+        support_email:
+          type: object
+          additionalProperties:
+            type: string
+        support_url:
+          $ref: '#/components/schemas/SupportUrl'
+    Author:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 13299734
+        name:
+          type: string
+          example: "Dark Reader Ltd"
+        url:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/en-US/firefox/user/13299734/"
+        username:
+          type: string
+          example: "alexanderby"
+    ContributionsUrl:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          example: "https://opencollective.com/darkreader?utm_content=product-page-contribute&utm_medium=referral&utm_source=addons.mozilla.org"
+        outgoing:
+          type: string
+          format: uri
+          example: "https://prod.outgoing.prod.webservices.mozgcp.net/v1/cf2c1d275fa0631e33503232ea41ff431dec43aecd8e50597d48663001590e16/https%3A//opencollective.com/darkreader%3Futm_content=product-page-contribute&utm_medium=referral&utm_source=addons.mozilla.org"
+    CurrentVersion:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 5751259
+        compatibility:
+          type: object
+          properties:
+            firefox:
+              $ref: '#/components/schemas/Compatibility'
+            android:
+              $ref: '#/components/schemas/Compatibility'
+        edit_url:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/en-US/developers/addon/darkreader/versions/5751259"
+        file:
+          $ref: '#/components/schemas/File'
+        is_strict_compatibility_enabled:
+          type: boolean
+        license:
+          $ref: '#/components/schemas/License'
+        release_notes:
+          type: object
+          additionalProperties:
+            type: string
+        reviewed:
+          type: string
+          format: date-time
+          example: "2024-06-03T17:37:38Z"
+        version:
+          type: string
+          example: "4.9.86"
+    Compatibility:
+      type: object
+      properties:
+        min:
+          type: string
+          example: "78.0"
+        max:
+          type: string
+          example: "*"
+    File:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 4295557
+        created:
+          type: string
+          format: date-time
+          example: "2024-05-30T10:50:27Z"
+        hash:
+          type: string
+          example: "sha256:dde9896751858d0179f3d724a59f2bd4a0d61e599cb8822dc8ed2de320510714"
+        is_mozilla_signed_extension:
+          type: boolean
+        size:
+          type: integer
+          example: 748912
+        status:
+          type: string
+          example: "public"
+        url:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/firefox/downloads/file/4295557/darkreader-4.9.86.xpi"
+        permissions:
+          type: array
+          items:
+            type: string
+        optional_permissions:
+          type: array
+          items:
+            type: string
+        host_permissions:
+          type: array
+          items:
+            type: string
+    License:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 22
+        is_custom:
+          type: boolean
+        name:
+          type: object
+          additionalProperties:
+            type: string
+        slug:
+          type: string
+          example: "MIT"
+        url:
+          type: string
+          format: uri
+          example: "http://www.opensource.org/license/mit"
+    Preview:
+      type: object
+      properties:
+        id:
+          type: integer
+          example: 238251
+        caption:
+          type: object
+          additionalProperties:
+            type: string
+        image_size:
+          type: object
+          properties:
+            width:
+              type: integer
+              example: 1338
+            height:
+              type: integer
+              example: 805
+        image_url:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/user-media/previews/full/238/238251.png?modified=1592502217"
+        thumbnail_size:
+          type: object
+          properties:
+            width:
+              type: integer
+              example: 320
+            height:
+              type: integer
+              example: 192
+        thumbnail_url:
+          type: string
+          format: uri
+          example: "https://addons.mozilla.org/user-media/previews/thumbs/238/238251.png?modified=1592502217"
+        is_image:
+          type: boolean
+    Promoted:
+      type: object
+      properties:
+        category:
+          type: string
+          example: "recommended"
+        category_label:
+          type: object
+          additionalProperties:
+            type: string
+    Ratings:
+      type: object
+      properties:
+        average:
+          type: number
+          format: float
+          example: 4.7
+        bayesian_average:
+          type: number
+          format: float
+          example: 4.699563
+        count:
+          type: integer
+          example: 6007
+    Homepage:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          example: "https://darkreader.org/"
+        outgoing:
+          type: string
+          format: uri
+          example: "https://prod.outgoing.prod.webservices.mozgcp.net/v1/d01ff85535f84d95b8a779b74f7e0277a4603b55694765f124812a1665672b99/https%3A//darkreader.org/"
+    SupportUrl:
+      type: object
+      properties:
+        url:
+          type: string
+          format: uri
+          example: "https://github.com/darkreader/darkreader"
+        outgoing:
+          type: string
+          format: uri
+          example: "https://prod.outgoing.prod.webservices.mozgcp.net/v1/3466481e6f33d505c4ceba8e83553e64b94467a13a8e256f9350aaef7b56c00e/https%3A//github.com/darkreader/darkreader"    

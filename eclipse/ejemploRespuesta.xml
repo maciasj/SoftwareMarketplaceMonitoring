@@ -1,0 +1,61 @@
+
+<!-- Example resposne for the http method https://marketplace.eclipse.org/node/5590071/api/p -->
+<?xml version="1.0" encoding="UTF-8"?>
+<marketplace>
+    <node id="5590071" name="Tabnine - AI assistant &amp;amp; Chat for software developers" url="https://marketplace.eclipse.org/content/tabnine-ai-assistant-chat-software-developers">
+        <type>resource</type>
+        <categories>
+            <category id="6" name="Editor" url="https://marketplace.eclipse.org/listings/category/editor"/>
+            <category id="1966" name="Programming Languages" url="https://marketplace.eclipse.org/listings/category/programming-languages"/>
+            <category id="17" name="Tools" url="https://marketplace.eclipse.org/listings/category/tools"/>
+        </categories>
+        <tags>
+            <tag id="957" name="code completion" url="https://marketplace.eclipse.org/free-tagging/code-completion"/>
+            <tag id="7345" name="AI" url="https://marketplace.eclipse.org/free-tagging/ai"/>
+            <tag id="663" name="chat" url="https://marketplace.eclipse.org/free-tagging/chat"/>
+            <tag id="8378" name="AI Assistant" url="https://marketplace.eclipse.org/free-tagging/ai-assistant"/>
+            <tag id="1122" name="Artificial intelligence" url="https://marketplace.eclipse.org/free-tagging/artificial-intelligence"/>
+        </tags>
+        <owner>Avichay Libeskind Mulyan</owner>
+        <favorited>46</favorited>
+        <installstotal>9008</installstotal>
+        <installsrecent>694</installsrecent>
+        <shortdescription>
+            <![CDATA[Tabnine: AI-powered chat and code completion for 80+ languages and frameworks including JavaScript, Python, Java, PHP, Go, and more
+Tabnine is the AI coding assistant that...]]>
+        </shortdescription>
+        <body>
+            <![CDATA[<h2>Tabnine: AI-powered chat and code completion for 80+ languages and frameworks including JavaScript, Python, Java, PHP, Go, and more</h2><p dir="ltr">Tabnine is the AI coding assistant that accelerates and simplifies software development while keeping your code private, secure, and compliant. It provides accurate, highly personalized results for generating code, writing unit tests, creating documentation, explaining legacy code, fixing code, and much more.&nbsp;</p><h3>Tabnine: The AI coding assistant that you control</h3><p>Tabnine is the AI coding assistant that you control — helping development teams of every size use AI to accelerate and simplify the software development process&nbsp;<strong>without sacrificing privacy, security, or compliance.</strong> Tabnine boosts engineering velocity, code quality, and developer happiness by automating the coding workflow through AI tools customized to your team. Tabnine is trusted by more than 1,000,000 developers across thousands of organizations. Learn how to&nbsp;<a href="https://docs.tabnine.com/main/getting-started/install" rel="nofollow"><u>install and activate Tabnine</u></a> and&nbsp;<a href="https://docs.tabnine.com/main/getting-started/quickstart" rel="nofollow"><u>get started</u></a>.&nbsp;</p><p>&nbsp;</p><h3>Boost developer productivity with AI-powered chat and code completions</h3><p dir="ltr">Tabnine offers best-in-class AI code completion and an AI-powered chat that increases productivity and accelerates the entire software development lifecycle.&nbsp;</p><h3>Here’s what you can do with Tabnine:</h3><ul><li dir="ltr"><strong>Plan:</strong> Ask Tabnine general coding questions or learn how things work in your specific project and get solutions and references relevant to your workspace.&nbsp;</li><li dir="ltr"><strong>Create:</strong> Generate new code using natural language. As you continue coding, Tabnine provides inline code completions, offering real-time, context-aware suggestions that seamlessly blend with your coding style.</li><li dir="ltr"><strong>Test:</strong> Ask Tabnine to create tests for a specific function or code in your project, and get back the actual test cases, implementation, and assertion. Tabnine can also use existing tests in your project and suggest tests that align with your project’s testing framework.&nbsp;</li><li dir="ltr"><strong>Fix:</strong> When tests fail, you can select code with an error and ask Tabnine for recommendations on how to fix it.&nbsp;</li><li dir="ltr"><strong>Document:</strong> Generate documentation for specific sections of your code to enhance readability and make it easy for other team members to understand.</li><li dir="ltr"><strong>Explain:&nbsp;</strong>Tabnine Chat can provide you with an explanation for a block of existing code, which is especially useful when reading a new codebase or reading legacy code in languages you don’t know as well.&nbsp;</li><li dir="ltr"><strong>Maintain:</strong> In addition to writing new code, Tabnine can help you change the existing code by adding functionality, refactoring, or fixing specific code.</li></ul><h3>Tabnine supports most popular languages, frameworks, and IDEs.&nbsp;</h3><p><strong>Supported languages, frameworks, and libraries:</strong></p><p>&nbsp;JavaScript, TypeScript, Python, Java, C, C++, C#, Go, Php, Ruby, Kotlin, Dart, Rust, React/Vue, HTML 5, CSS, Lua, Perl, YAML, Cuda, SQL, Scala, Shell (bash), Swift, R, Julia, VB, Groovy, Matlab, Terraform, ABAP.&nbsp;<br><a href="https://docs.tabnine.com/main/welcome/readme/supported-languages" rel="nofollow"><u>Learn more</u></a></p><p dir="ltr"><strong>Supported IDEs:</strong>&nbsp;</p><p dir="ltr">VS Code, JetBrains IDEs (IntelliJ, PyCharm, WebStorm, PhpStorm, Android Studio, GoLand, CLion, Rider, DataGrip, RustRover, RubyMine, DataSpell, Aqua, AppCode), Eclipse, Visual Studio 2022.&nbsp;<br><a href="https://docs.tabnine.com/main/welcome/readme/supported-ides" rel="nofollow"><u>Learn more</u></a>&nbsp;</p><h3>The AI coding assistant that you control</h3><p dir="ltr">Unlike generic coding assistants,&nbsp;<strong>Tabnine is:</strong></p><ul><li dir="ltr"><strong>Private:</strong> You choose where and how to deploy Tabnine, either as a secure SaaS offering or self-hosted on-premises or in a VPC). We never store your data or share it with any third party. Additionally, we don’t use your data to train our models. This ensures complete privacy and maximizes control over your intellectual property.<br>&nbsp;</li><li dir="ltr"><strong>Personalized:</strong> Tabnine delivers an optimized experience for each developer and engineering team. You can increase Tabnine's contextual awareness by making it aware of your environment — from a developer’s local IDE to the entire codebase — and receive highly personalized results for code completions, explanations, and documentation. Tabnine enterprise customers can further enrich the capability and quality of the output by creating a bespoke model that’s trained on their codebase.&nbsp;<br><br>&nbsp;</li><li dir="ltr"><strong>Protected:</strong>&nbsp;Tabnine is built with enterprise-grade security and compliance at its core. It’s trained exclusively on open source code with permissive licenses, ensuring that you’re never exposed to legal liability.</li></ul><h3>Resources</h3><ul><li dir="ltr"><a href="https://tabnine.com/" rel="nofollow">Homepage</a></li><li dir="ltr"><a href="https://docs.tabnine.com/main" rel="nofollow"><u>Documentation</u></a></li><li dir="ltr"><a href="https://app.tabnine.com/checkout/account-info" rel="nofollow"><u>Free 90 day trial</u></a></li><li dir="ltr"><a href="https://www.tabnine.com/pricing" rel="nofollow"><u>Pricing</u></a></li><li dir="ltr"><a href="https://www.tabnine.com/contact-us" rel="nofollow"><u>Get support</u></a></li><li dir="ltr"><a href="https://docs.tabnine.com/main/product-updates/whats-new" rel="nofollow"><u>Latest updates in Tabnine</u></a></li></ul>]]>
+</body>
+<created>1681825334</created>
+<changed>1716812054</changed>
+<foundationmember>0</foundationmember>
+<homepageurl>https://www.tabnine.com/</homepageurl>
+<image>
+    <![CDATA[https://marketplace.eclipse.org/sites/default/files/styles/badge_logo/public/tabnine-eclipse-logo-final_0.png?itok=xI040Wot]]>
+</image>
+<screenshot>
+    <![CDATA[https://marketplace.eclipse.org/sites/default/files/styles/medium/public/Render_1200_542_01.gif?itok=dAbj9ytO]]>
+</screenshot>
+<license>Commercial</license>
+<companyname>
+    <![CDATA[Tabnine]]>
+</companyname>
+<status>Production/Stable</status>
+<supporturl>
+    <![CDATA[https://support.tabnine.com]]>
+</supporturl>
+<version>0.11.0</version>
+<eclipseversion>4.31, 4.30, 4.29, 4.28, 4.27, 4.26, 4.25, 4.24, 4.23, 4.22, 4.21, 4.20, 4.19, 4.18, 4.32</eclipseversion>
+<min_java_version>java_11</min_java_version>
+<updateurl>https://eclipse-update-site.tabnine.com/Tabnine/latest</updateurl>
+<ius>
+    <iu required="TRUE">com.tabnine.eclipse.feature</iu>
+</ius>
+<platforms>
+    <platform>Windows</platform>
+    <platform>Mac</platform>
+    <platform>Linux/GTK</platform>
+</platforms>
+</node>
+</marketplace>

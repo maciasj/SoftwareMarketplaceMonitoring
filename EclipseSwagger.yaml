@@ -1,0 +1,336 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/JOELMACIAS/RawMarketplaces/1.0.0
+info:
+  version: "1.0.0"
+  title: Sample Access Code Flow OAuth2 Project
+  description: >-
+    This is an example of using OAuth2 Access Code Flow in a specification to
+    describe security to your API.
+security:
+  - accessCode:
+      - read
+      - write
+paths:
+  /api/p:
+    get:
+      summary: Obtener información del marketplace Eclipse
+      parameters:
+        - name: page_num
+          in: query
+          description: Número de página para la paginación
+          required: false
+          schema:
+            type: integer
+        - name: cache
+          in: query
+          description: Control de caché (0 para deshabilitar, 1 para habilitar)
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MarketplaceResponse'
+                
+  /taxonomy/term/{categoryId},{marketId}/api/p:
+    get:
+      summary: Obtener información del marketplace Eclipse por categoría y mercado
+      parameters:
+        - name: categoryId
+          in: path
+          description: ID de la categoría
+          required: true
+          schema:
+            type: integer
+        - name: marketId
+          in: path
+          description: ID del mercado
+          required: true
+          schema:
+            type: integer
+        - name: page_num
+          in: query
+          description: Número de página para la paginación
+          required: false
+          schema:
+            type: integer
+            default: 1
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MarketplaceResponse'
+                
+  /node/{nodeId}/api/p:
+    get:
+      summary: Obtener información del nodo del marketplace Eclipse por ID
+      parameters:
+        - name: nodeId
+          in: path
+          description: ID del nodo
+          required: true
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/MarketplaceNodeResponse'
+                
+  /favorites/top/api/p:
+    get:
+      summary: Obtener los elementos más populares favoritos en el marketplace Eclipse
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/TopFavoritesResponse'
+
+  /api/p/search/apachesolr_search/{Query}:
+    get:
+      summary: Buscar en Eclipse Marketplace
+      description: |
+        Busca recursos en el Eclipse Marketplace utilizando Solr Search.
+        Reemplaza {Query} con tu consulta de búsqueda.
+      parameters:
+        - name: Query
+          in: path
+          required: true
+          description: Consulta de búsqueda
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Respuesta exitosa
+          content:
+            application/xml:
+              schema:
+                $ref: '#/components/schemas/SearchResponse'
+                
+                
+components:
+  schemas:
+    MarketplaceResponse:
+      type: object
+      properties:
+        marketplace:
+          type: object
+          properties:
+            market:
+              type: array
+              items:
+                $ref: '#/components/schemas/Market'
+    Market:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Nombre del mercado
+        id:
+          type: integer
+          description: ID del mercado
+        url:
+          type: string
+          format: uri
+          description: URL del mercado
+        category:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+    Category:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID de la categoría
+        count:
+          type: integer
+          description: Cantidad de elementos en la categoría
+        url:
+          type: string
+          format: uri
+          description: URL de la categoría
+        name:
+          type: string
+          description: Nombre de la categoría
+    MarketplaceNodeResponse:
+      type: object
+      properties:
+        marketplace:
+          type: object
+          properties:
+            node:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Node'
+    TopFavoritesResponse:
+      type: object
+      properties:
+        marketplace:
+          type: object
+          properties:
+            favorites:
+              type: object
+              properties:
+                count:
+                  type: integer
+                  description: Cantidad de elementos favoritos
+                node:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Node'
+    SearchResponse:
+      type: object
+      properties:
+        marketplace:
+          type: object
+          properties:
+            seacrh:
+              type: object
+              properties:
+                count:
+                  type: integer
+                  description: Cantidad de elementos favoritos
+                node:
+                  type: array
+                  items:
+                    $ref: '#/components/schemas/Node'
+
+    Node:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID del nodo
+        name:
+          type: string
+          description: Nombre del nodo
+        url:
+          type: string
+          format: uri
+          description: URL del nodo
+        type:
+          type: string
+          description: Tipo del nodo
+        categories:
+          type: object
+          properties:
+            category:
+              type: array
+              items:
+                $ref: '#/components/schemas/Category'
+        tags:
+          type: object
+          properties:
+            tag:
+              type: array
+              items:
+                $ref: '#/components/schemas/Tag'
+        owner:
+          type: string
+          description: Propietario del nodo
+        favorited:
+          type: integer
+          description: Cantidad de favoritos
+        installstotal:
+          type: integer
+          description: Total de instalaciones
+        installsrecent:
+          type: integer
+          description: Instalaciones recientes
+        shortdescription:
+          type: string
+          description: Descripción corta
+        body:
+          type: string
+          description: Cuerpo del nodo
+        created:
+          type: integer
+          description: Fecha de creación (en formato Unix timestamp)
+        changed:
+          type: integer
+          description: Fecha de modificación (en formato Unix timestamp)
+        foundationmember:
+          type: integer
+          description: Miembro de la fundación
+        homepageurl:
+          type: string
+          format: uri
+          description: URL de la página de inicio
+        image:
+          type: string
+          format: uri
+          description: URL de la imagen
+        screenshot:
+          type: string
+          format: uri
+          description: Captura de pantalla
+        license:
+          type: string
+          description: Licencia
+        companyname:
+          type: string
+          description: Nombre de la empresa
+        status:
+          type: string
+          description: Estado del nodo
+        supporturl:
+          type: string
+          format: uri
+          description: URL de soporte
+        version:
+          type: string
+          description: Versión del nodo
+        eclipseversion:
+          type: string
+          description: Versión de Eclipse compatible
+        min_java_version:
+          type: string
+          description: Versión mínima de Java requerida
+        updateurl:
+          type: string
+          format: uri
+          description: URL de actualización
+        ius:
+          type: object
+          properties:
+            iu:
+              type: object
+              properties:
+                required:
+                  type: string
+                  description: IU requerida
+        platforms:
+          type: object
+          properties:
+            platform:
+              type: array
+              items:
+                type: string
+                description: Plataforma compatible
+
+    Tag:
+      type: object
+      properties:
+        id:
+          type: integer
+          description: ID de la etiqueta
+        name:
+          type: string
+          description: Nombre de la etiqueta
+        url:
+          type: string
+          format: uri
+          description: URL de la etiqueta

@@ -72,7 +72,6 @@ class EclipseJSONParser(JSONParser):
             'marketplace': 'eclipse'
         }
             products.append(product)
-        print("Conjunto productos", products)
         return products
     
     def extractSingleProduct(response):
@@ -89,7 +88,7 @@ class EclipseJSONParser(JSONParser):
         #Añadimos las categorias a las que pertenece
         tags = []
         for tag in product_elem.find('tags').findall('tag'):
-            print("tag" ,tag.get('name'))
+            print("keyword" ,tag.get('name'))
             tags.append(tag.get('name'))
         
         #Añadimos una pequeña descripcion del producto

@@ -1,0 +1,78 @@
+openapi: 3.0.0
+info:
+  title: Documentación de la API de Store
+  description: Documentación para el método POST de la API de Store
+  version: 1.0.0
+servers:
+  - url: https://storeedgefd.dsx.mp.microsoft.com/
+paths:
+  /v8.0/sdk/products:
+    post:
+      summary: Añadir producto
+      description: Permite añadir un producto al carrito.
+      parameters:
+        - in: query
+          name: market
+          required: true
+          schema:
+            type: string
+            example: US
+          description: Código de mercado
+        - in: query
+          name: locale
+          required: true
+          schema:
+            type: string
+            example: en-US
+          description: Localización
+        - in: query
+          name: deviceFamily
+          required: true
+          schema:
+            type: string
+            example: Windows.Desktop
+          description: Familia de dispositivos
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              description: "Se puede añadir más de un id de producto, separado por comas"
+              properties:
+                productIds:
+                  type: string
+                  example: "bwv5n56m5bvh"
+      responses:
+        '200':
+          description: Producto añadido correctamente
+          
+  /v9.0/manifestSearch:
+    post:
+      summary: Búsqueda por parametro
+      description: Permite buscar paremtoris en la tienda.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                Query:
+                  type: object
+                  properties:
+                    KeyWord:
+                      type: string
+                      example: "{{SEARCH_QUERY}}"
+                      description: Palabra clave para la búsqueda
+                    MatchType:
+                      type: string
+                      example: "{{Substring}}"
+                      description: Tipo de coincidencia para la búsqueda
+      responses:
+        '200':
+          description: Búsqueda exitosa
+        '400':
+          description: Solicitud incorrecta
+      
+          

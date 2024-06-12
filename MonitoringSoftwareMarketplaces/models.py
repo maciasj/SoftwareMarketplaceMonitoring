@@ -75,12 +75,12 @@ class Product(models.Model):
         return self.name
 
 
-class keywordsInProduct(models.Model):
+class ProductKeyword(models.Model):
     product = models.IntegerField()
     keywords = models.TextField()
     marketplace = models.TextField()
     class Meta:
-        db_table = 'KeywordsInProduct'
+        db_table = 'ProductKeyword'
     def __str__(self):
         return self.name    
     

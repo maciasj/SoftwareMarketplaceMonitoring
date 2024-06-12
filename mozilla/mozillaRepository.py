@@ -74,7 +74,7 @@ def existeKewyword(keyword):
     return keyword.exists()
     
 def getProductByKewyword(Kewyword):
-    keywordProduct = keywordsInProduct.objects.filter(keywords_icontains=Kewyword,marketplace="mozilla").values('product')
+    keywordProduct = ProductKeyword.objects.filter(keywords_icontains=Kewyword,marketplace="mozilla").values('product')
     object_products = []
     for element in keywordProduct:
         product = Product.objects.get(identifier=element['product'])
@@ -133,8 +133,8 @@ def insertSingleProduct(product):
 
     #Insertar tags en producto    
     for keywords in product['keywords']:
-        keywords_in_product = keywordsInProduct(product=product['identifier'], keywords=keywords, marketplace=MARKETPLACE)
-        if(not keywordsInProduct.objects.filter(product=product['identifier'], keywords=keywords).exists()):
+        keywords_in_product = ProductKeyword(product=product['identifier'], keywords=keywords, marketplace=MARKETPLACE)
+        if(not ProductKeyword.objects.filter(product=product['identifier'], keywords=keywords).exists()):
             keywords_in_product.save()
             print("Insertando Tag en producto: ", keywords)
     return product_obj

@@ -22,7 +22,6 @@ def serializeProduct(product, categories, keywords):
 def insertCategories(categories):
     for category in categories:
         try:
-            print(category)
             category_obj = Category(identifier=category['identifier'], name=category['name'], url=category['url'], marketplace=MARKETPLACE)
             print("Insertando categoria: ", category_obj['name'])
             category_obj.save()
@@ -57,7 +56,7 @@ def insertSingleProduct(product):
                             creator=product['creator'],
                             api_name=product['api_name'], 
                             marketplace=MARKETPLACE)
-    print("Insertando producto: ", product_obj)
+    print("Insertando producto: ", product['name'])
     product_obj.save()
 
     #Insertar categorias en producto
@@ -69,8 +68,8 @@ def insertSingleProduct(product):
 
     #Insertar tags en producto    
     for keywords in product['keywords']:
-        keywords_in_product = keywordsInProduct(product=product['identifier'], keywords=keywords, marketplace=MARKETPLACE)
-        if(not keywordsInProduct.objects.filter(product=product['identifier'], keywords=keywords).exists()):
+        keywords_in_product = ProductKeyword(product=product['identifier'], keywords=keywords, marketplace=MARKETPLACE)
+        if(not ProductKeyword.objects.filter(product=product['identifier'], keywords=keywords).exists()):
             keywords_in_product.save()
             print("Insertando Tag en producto: ", keywords, "nombre  " , product['name'] )
 
@@ -118,7 +117,7 @@ def getProductsByCategory(market, category):
 
 def getProductById(nodeId):
         product = Product.objects.get(identifier=nodeId)
-        keywords = keywordsInProduct.objects.filter(product=nodeId).values_list('keywords', flat=True)
+        keywords = ProductKeyword.objects.filter(product=nodeId).values_list('keywords', flat=True)
         categories = CategoryInProduct.objects.filter(product=nodeId).values_list('category', flat=True)
         json_product = serializeProduct(product, categories, keywords)
         return json_product

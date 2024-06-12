@@ -7,6 +7,6 @@ select * from SMM_database.Market;
 select * from SMM_database.CategoryInProduct;
 select * from SMM_database.Product where identifier ="3799227";
 select * from SMM_database.Keywords;
-select * from SMM_database.KeywordsInProduct;
+select * from SMM_database.ProductKeyword;
 
 
