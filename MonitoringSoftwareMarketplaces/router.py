@@ -23,5 +23,4 @@ urlpatterns = [
     path('softwareMarketplace/', include('eclipse.eclipseRouter')),
     path('softwareMarketplace/', include('mozilla.mozillaRouter')),
     path('softwareMarketplace/', include('microsoft.microsoftRouter')),
-    path('admin/', admin.site.urls),
 ]
