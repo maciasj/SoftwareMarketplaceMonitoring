@@ -56,8 +56,8 @@ paths:
                     type: string
     /addons/search/:
       get:
-        summary: Buscar complementos
-        description: Busca complementos en Mozilla Add-ons con varios parámetros de búsqueda.
+        summary: Búsqueda por parámetro
+        description: Búsca los add-ons por el parámetro proporcionado además de ofrecer diferentes  filtros
         tags:
           - Mozilla
         parameters:
@@ -76,25 +76,25 @@ paths:
               enum: [firefox, android, thunderbird]
           - name: author
             in: query
-            description: Autor del complemento
+            description: Autor del add-on
             required: false
             schema:
               type: string
           - name: category
             in: query
-            description: Categoría del complemento
+            description: Categoría del add-on
             required: false
             schema:
               type: string
           - name: color
             in: query
-            description: Color del complemento
+            description: Filtro experimental enfocado a los temas
             required: false
             schema:
               type: string
           - name: lang
             in: query
-            description: Idioma del complemento
+            description: Idioma del add-on
             required: false
             schema:
               type: string
@@ -112,26 +112,26 @@ paths:
               type: integer
           - name: tag
             in: query
-            description: Etiqueta del complemento
+            description: Etiqueta del add-on
             required: false
             schema:
               type: string
           - name: type
             in: query
-            description: Tipo de complemento
+            description: Tipo de add-on
             required: false
             schema:
               type: string
               enum: [extension, statictheme, dictionary, language]
           - name: users
             in: query
-            description: Número de usuarios del complemento
+            description: Número de usuarios del add-on
             required: false
             schema:
               type: integer
           - name: guid
             in: query
-            description: GUID del complemento
+            description: GUID del add-on
             required: false
             schema:
               type: string
@@ -693,4 +693,4 @@ components:
         outgoing:
           type: string
           format: uri
-          example: "https://prod.outgoing.prod.webservices.mozgcp.net/v1/3466481e6f33d505c4ceba8e83553e64b94467a13a8e256f9350aaef7b56c00e/https%3A//github.com/darkreader/darkreader"    
+          example: "https://prod.outgoing.prod.webservices.mozgcp.net/v1/3466481e6f33d505c4ceba8e83553e64b94467a13a8e256f9350aaef7b56c00e/https%3A//github.com/darkreader/darkreader"

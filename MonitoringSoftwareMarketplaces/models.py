@@ -67,7 +67,6 @@ class Product(models.Model):
     description = models.TextField()
     type = models.TextField()
     creator = models.TextField()
-    api_name = models.TextField()
     marketplace = models.TextField()
     class Meta:
         db_table = 'Product'

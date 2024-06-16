@@ -5,14 +5,8 @@ from django.http import JsonResponse
 class serviceInterface:
 
     def getProductById(request, id):
-        """Load in the file for extracting text."""
-        pass
-    def getProductByTitle(request, id):
-        """Load in the file for extracting text."""
         pass
     def getProductByQuery(request, id):
-        """Load in the file for extracting text."""
         pass
     def getCategories(request):
-        """Load in the file for extracting text."""
         pass

@@ -13,7 +13,6 @@ def serializeProduct(product, categories, keywords):
         'description': product.description,
         'type': product.type,
         'creator': product.creator,
-        'api_name': product.api_name,
         'marketplace': MARKETPLACE,
        
     }
@@ -23,7 +22,7 @@ def insertCategories(categories):
     for category in categories:
         try:
             category_obj = Category(identifier=category['identifier'], name=category['name'], url=category['url'], marketplace=MARKETPLACE)
-            print("Insertando categoria: ", category_obj['name'])
+            print("Insertando categoria: ", category_obj)
             category_obj.save()
         except Exception as e:
             print("Error al insertar categoria: ", category['name'], e)
@@ -54,7 +53,6 @@ def insertSingleProduct(product):
                             description=product['description'], 
                             type=product['type'], 
                             creator=product['creator'],
-                            api_name=product['api_name'], 
                             marketplace=MARKETPLACE)
     print("Insertando producto: ", product['name'])
     product_obj.save()
@@ -73,18 +71,7 @@ def insertSingleProduct(product):
             keywords_in_product.save()
             print("Insertando Tag en producto: ", keywords, "nombre  " , product['name'] )
 
-def getCategories():
-    categories = Category.objects.filter(marketplace=MARKETPLACE)
-    serialized_categories = []
-    for category in categories:
-        category = {
-            'identifier': category.identifier,
-            'name': category.name,
-            'url': category.url,
-            'marketplace': MARKETPLACE
-        }
-        serialized_categories.append(category)
-    return serialized_categories
+
         
 def getMarkets():
     markets = Market.objects.filter(marketplace=MARKETPLACE)
@@ -116,7 +103,7 @@ def getProductsByCategory(market, category):
         return 2
 
 def getProductById(nodeId):
-        product = Product.objects.get(identifier=nodeId)
+        product = Product.objects.get(identifier=nodeId, marketplace=MARKETPLACE)
         keywords = ProductKeyword.objects.filter(product=nodeId).values_list('keywords', flat=True)
         categories = CategoryInProduct.objects.filter(product=nodeId).values_list('category', flat=True)
         json_product = serializeProduct(product, categories, keywords)
@@ -132,7 +119,6 @@ def getProductsByQuery(query):
             'description': product.description,
             'type': product.type,
             'creator': product.creator,
-            'api_name': product.api_name,
             'marketplace': product.marketplace,
             'url': product.url
         }
@@ -146,3 +132,16 @@ def deleteProduct(id):
         return 0
     except Product.DoesNotExist:
         return 1
+
+def getKeywords():
+    keywords = ProductKeyword.objects.filter(marketplace=MARKETPLACE).values_list('keywords').distinct()
+    return list(keywords)
+
+def getProductByKeyword(keyword):
+    products = ProductKeyword.objects.filter(keywords=keyword, marketplace=MARKETPLACE).values_list('product', flat=True)
+    print(products) 
+    json_products = []
+    for product in products:
+        print(product)
+        json_products.append(getProductById(product))
+    return json_products

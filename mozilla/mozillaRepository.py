@@ -38,6 +38,7 @@ def getCategories():
             'description': category.description,
             'marketplace': category.marketplace
         }
+        print("Categoria: ", category['name'])
         serialized_categories.append(category)
     return serialized_categories
 

@@ -83,7 +83,6 @@ def getProductById(id):
         'description': product.description,
         'type': product.type,
         'creator': product.creator,
-        'api_name': product.api_name,
         'marketplace': product.marketplace,
         'url': product.url}
         return product

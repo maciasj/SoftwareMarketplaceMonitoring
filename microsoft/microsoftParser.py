@@ -23,7 +23,9 @@ class microsoftParser(JSONParser):
                 'creator': product['LocalizedProperties'][0]['DeveloperName'],
                 'api_name': "",
                 'marketplace': 'microsoft',
-                'url': ""
+                'url': "",
+                'categories': "",
+                'keywords': ""
             }
             products.append(newProduct)
         return products

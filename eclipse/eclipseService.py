@@ -3,27 +3,28 @@ import requests
 from . import EclipseJSONParser
 from django.http import JsonResponse
 from MonitoringSoftwareMarketplaces.serviceInterface import serviceInterface
-from . import eclipseReposiroty
+from MonitoringSoftwareMarketplaces.repository import Repository
 
+MARKETPLACE = "eclipse"
 
 class EclipseService(serviceInterface):
 
-    def getCategoriesMarketplace(request):
+    def getCategories(request):
         cache = request.GET.get('cache')
         pageNumber = request.GET.get('page_num') or 1
         params = {'page_num': pageNumber}  
         if(cache == "1"):
-            categories = eclipseReposiroty.getCategories()
-            markets = eclipseReposiroty.getMarkets()
+            categories = Repository.getCategories(MARKETPLACE)
+            markets = Repository.getMarkets(MARKETPLACE)
             return JsonResponse({'categories': categories, 'markets': markets}, safe=False,status=200)
        
         response = requests.get('https://marketplace.eclipse.org/api/p', params=params)
         if response.status_code == 200:
             try:
                 categories = EclipseJSONParser.EclipseJSONParser.parseCategories(response)
-                eclipseReposiroty.insertCategories(categories)
+                Repository.insertCategoriesE(categories)
                 markets = EclipseJSONParser.EclipseJSONParser.parseMarkets(response)
-                eclipseReposiroty.insertMarkets(markets)
+                Repository.insertMarkets(markets, MARKETPLACE)
                 response.json = {'categories': categories, 'markets': markets}
                 return JsonResponse(response.json, safe=False,status=202)
             except :
@@ -32,12 +33,12 @@ class EclipseService(serviceInterface):
         else:
             return JsonResponse({'error': 'Error en la comunicación con el serivicio'},status=response.status_code, safe=False)
         
-    def getProductsByMarketplaceAndCategory(request, market, category):
+    def getProductsByCategory(request, market, category):
         cache = request.GET.get('cache')
         pageNumber = request.GET.get('page_num') or 1
         params = {'page_num': pageNumber}  
         if(cache == "1"):
-            products = eclipseReposiroty.getProductsByCategory(market, category)
+            products = Repository.getProductByCategory(category, MARKETPLACE)
             return JsonResponse(products, safe=False,status=200)
         # Si no se especifica el parámetro cache, o si es falso, se hace la petición a la API
         response = requests.get('https://marketplace.eclipse.org/taxonomy/term/{},{}/api/p'.format(category, market), params=params)
@@ -45,7 +46,7 @@ class EclipseService(serviceInterface):
             try:
                 products = EclipseJSONParser.EclipseJSONParser.parseProducts(response,"category")
                 for product in products:
-                    eclipseReposiroty.insertSingleProduct(product)
+                    Repository.insertSingleProduct(product, MARKETPLACE)
                 return JsonResponse(products, safe=False,status=202)
             except:
                 return JsonResponse({'error': 'Error al obtener los productis'},status=response.status_code)
@@ -58,7 +59,7 @@ class EclipseService(serviceInterface):
         params = {'page_num': pageNumber}  
         if(cache == "1"):
             try:
-                product = eclipseReposiroty.getProductById(nodeId)
+                product = Repository.getProductById(nodeId, MARKETPLACE)
                 return JsonResponse(product, safe=False,status=201)
             except:
                 return JsonResponse({'error': 'Error al obtener el producto'},status=404)
@@ -68,7 +69,7 @@ class EclipseService(serviceInterface):
             try:
                 info = response.text
                 product = EclipseJSONParser.EclipseJSONParser.extractSingleProduct(response)
-                eclipseReposiroty.insertSingleProduct(product)
+                Repository.insertSingleProduct(product, MARKETPLACE)
                 return JsonResponse(product, safe=False,status=202)
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
@@ -103,7 +104,7 @@ class EclipseService(serviceInterface):
             try:
                 products = EclipseJSONParser.EclipseJSONParser.parseProducts(response,"favorites")
                 for product in products:
-                    eclipseReposiroty.insertSingleProduct(product)
+                    Repository.insertSingleProduct(product, MARKETPLACE)
                 return JsonResponse(products, safe=False,status=202)
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
@@ -116,14 +117,14 @@ class EclipseService(serviceInterface):
         query = request.GET.get('query')
         parameters = request.GET.get('parameters')
         if(cache == "1"):
-            products = eclipseReposiroty.getProductsByQuery(query)
+            products = Repository.getProductsByQuery(query,MARKETPLACE)
             return JsonResponse(products, safe=False,status=201)
         response = requests.get('http://marketplace.eclipse.org/api/p/search/apachesolr_search/{}'.format(query)+"?{}".format(parameters))
         if response.status_code == 200:
             try:
                 products = EclipseJSONParser.EclipseJSONParser.parseProducts(response,"search")
                 for product in products:
-                    eclipseReposiroty.insertSingleProduct(product)
+                    Repository.insertSingleProduct(product, MARKETPLACE)
                 return JsonResponse(products, safe=False,status=202)
             except :
                 return {'error': 'Error al obtener los productos'}
@@ -135,15 +136,29 @@ class EclipseService(serviceInterface):
         data = json.loads(request.body)
         try:
             for product in data:
-                eclipseReposiroty.insertSingleProduct(product)
+                Repository.insertSingleProduct(product, MARKETPLACE)
             return JsonResponse({'message': 'Producto insertado correctamente'}, safe=False, status=201)
         except:
             return JsonResponse({'error': 'Error al insertar el producto'}, safe=False, status=500)
         
     def deleteProduct(request, id):
         try:
-            eclipseReposiroty.deleteProduct(id)
+            Repository.deleteProduct(id, MARKETPLACE)
             return JsonResponse({'message': 'Producto eliminado correctamente'}, safe=False, status=204)
         except:
             return JsonResponse({'error': 'Error al eliminar el producto'}, safe=False, status=500)
-        
+    
+    def getKeywords(request):
+        try:
+            keywords = Repository.getKeywords(MARKETPLACE)
+            return JsonResponse(keywords, safe=False, status=200)
+        except:
+            return JsonResponse({'error': 'Error al obtener las palabras clave'}, safe=False, status=500)
+    
+    def getProductByKeyword(request,keyword):
+        try:
+            products = Repository.getProductByKeyword(keyword, MARKETPLACE)
+            return JsonResponse(products, safe=False, status=200)
+        except:
+            return JsonResponse({'error': 'Error al obtener los productos'}, safe=False, status=500)
+    

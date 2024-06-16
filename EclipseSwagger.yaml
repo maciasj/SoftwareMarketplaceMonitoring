@@ -9,14 +9,11 @@ info:
   description: >-
     This is an example of using OAuth2 Access Code Flow in a specification to
     describe security to your API.
-security:
-  - accessCode:
-      - read
-      - write
+
 paths:
   /api/p:
     get:
-      summary: Obtener información del marketplace Eclipse
+      summary: Obtener las categorias y marketplaces
       parameters:
         - name: page_num
           in: query
@@ -40,7 +37,7 @@ paths:
                 
   /taxonomy/term/{categoryId},{marketId}/api/p:
     get:
-      summary: Obtener información del marketplace Eclipse por categoría y mercado
+      summary: Obtener productos de Eclipse por categoría y mercado
       parameters:
         - name: categoryId
           in: path
@@ -111,6 +108,18 @@ paths:
           description: Consulta de búsqueda
           schema:
             type: string
+        - name: page_num
+          in: query
+          description: Número de página para la paginación
+          required: false
+          schema:
+            type: integer
+        - in: query
+          name: filters
+          required: false
+          schema:
+            type: string
+          description: Permite tres tipos de filtros que son sm_field_status, tid y sm_field_licensetype.
       responses:
         '200':
           description: Respuesta exitosa
