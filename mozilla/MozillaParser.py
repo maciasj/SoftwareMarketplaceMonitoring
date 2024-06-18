@@ -1,6 +1,6 @@
 from MonitoringSoftwareMarketplaces.JSONParser import JSONParser
 
-class JSONMozillaParser(JSONParser):
+class MozillaParser(JSONParser):
 
     def parseCategories(data):
         categories = []
@@ -13,10 +13,10 @@ class JSONMozillaParser(JSONParser):
             keywords.append(keyword)
         return keywords
     
-    def parseInfoSingleProduct(data):
+    def parseSingleProduct(data):
         print("PRODUCTO", data)
-        categories = JSONMozillaParser.parseCategories(data['categories'])
-        keywords = JSONMozillaParser.parseKeywords(data['tags'])
+        categories = MozillaParser.parseCategories(data['categories'])
+        keywords = MozillaParser.parseKeywords(data['tags'])
         if 'description' in data and data['description'] and 'en-US' in data['description']:
             description1 = data['description']['en-US']
         else:
@@ -46,7 +46,7 @@ class JSONMozillaParser(JSONParser):
     def parseProducts( data):
         products = []
         for product in data['results']:
-            products.append(JSONMozillaParser.parseInfoSingleProduct(product))
+            products.append(MozillaParser.parseSingleProduct(product))
         return products
     
     def parseGUIDs(data):

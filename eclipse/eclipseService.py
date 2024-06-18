@@ -1,6 +1,6 @@
 import json
 import requests
-from . import EclipseJSONParser
+from . import EclipseParser
 from django.http import JsonResponse
 from MonitoringSoftwareMarketplaces.serviceInterface import serviceInterface
 from MonitoringSoftwareMarketplaces.repository import Repository
@@ -21,9 +21,9 @@ class EclipseService(serviceInterface):
         response = requests.get('https://marketplace.eclipse.org/api/p', params=params)
         if response.status_code == 200:
             try:
-                categories = EclipseJSONParser.EclipseJSONParser.parseCategories(response)
+                categories = EclipseParser.EclipseParser.parseCategories(response)
                 Repository.insertCategoriesE(categories)
-                markets = EclipseJSONParser.EclipseJSONParser.parseMarkets(response)
+                markets = EclipseParser.EclipseParser.parseMarkets(response)
                 Repository.insertMarkets(markets, MARKETPLACE)
                 response.json = {'categories': categories, 'markets': markets}
                 return JsonResponse(response.json, safe=False,status=202)
@@ -44,7 +44,7 @@ class EclipseService(serviceInterface):
         response = requests.get('https://marketplace.eclipse.org/taxonomy/term/{},{}/api/p'.format(category, market), params=params)
         if response.status_code == 200:
             try:
-                products = EclipseJSONParser.EclipseJSONParser.parseProducts(response,"category")
+                products = EclipseParser.EclipseParser.parseProducts(response,"category")
                 for product in products:
                     Repository.insertSingleProduct(product, MARKETPLACE)
                 return JsonResponse(products, safe=False,status=202)
@@ -68,11 +68,11 @@ class EclipseService(serviceInterface):
         if response.status_code == 200:
             try:
                 info = response.text
-                product = EclipseJSONParser.EclipseJSONParser.extractSingleProduct(response)
+                product = EclipseParser.EclipseParser.extractSingleProduct(response)
                 Repository.insertSingleProduct(product, MARKETPLACE)
                 return JsonResponse(product, safe=False,status=202)
             except json.JSONDecodeError:
-                return {'error': 'Error al decodificar JSON en la respuesta'}
+                return JsonResponse({'error': 'Error al obtener el producti'},status=400)
         else:
             # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
             return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
@@ -102,7 +102,7 @@ class EclipseService(serviceInterface):
         
         if response.status_code == 200:
             try:
-                products = EclipseJSONParser.EclipseJSONParser.parseProducts(response,"favorites")
+                products = EclipseParser.EclipseParser.parseProducts(response,"favorites")
                 for product in products:
                     Repository.insertSingleProduct(product, MARKETPLACE)
                 return JsonResponse(products, safe=False,status=202)
@@ -122,7 +122,7 @@ class EclipseService(serviceInterface):
         response = requests.get('http://marketplace.eclipse.org/api/p/search/apachesolr_search/{}'.format(query)+"?{}".format(parameters))
         if response.status_code == 200:
             try:
-                products = EclipseJSONParser.EclipseJSONParser.parseProducts(response,"search")
+                products = EclipseParser.EclipseParser.parseProducts(response,"search")
                 for product in products:
                     Repository.insertSingleProduct(product, MARKETPLACE)
                 return JsonResponse(products, safe=False,status=202)

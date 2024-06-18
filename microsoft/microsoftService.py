@@ -34,7 +34,7 @@ class microsoftService(serviceInterface):
         categories = Repository.getCategories(MARKETPLACE)
         return JsonResponse(categories,safe=False,status=200)
     
-    def searchProduct(request):
+    def getProductByQuery(request):
         cache = request.GET.get('cache')
         query = request.GET.get('query')
         match = request.GET.get('match')
@@ -82,7 +82,6 @@ class microsoftService(serviceInterface):
             else:
                 return JsonResponse({"error": "No se pudo obtener el producto"}, response.status_code)
             
-
     def addProduct(request):
         data = json.loads(request.body)
         products = microsoftService.insertGroupProducts(data)

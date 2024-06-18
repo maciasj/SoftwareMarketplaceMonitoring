@@ -235,3 +235,10 @@ class Repository:
             "api_name": newcategory[0]['api_name'],
         }
         return objectCategory
+    
+    def insertGroupProducts(products, marketplace):
+        newProducts = []
+        for product in products:
+            Repository.insertSingleProduct(product, marketplace)
+            newProducts.append(product)
+        return newProducts

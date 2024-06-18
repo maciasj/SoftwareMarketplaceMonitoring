@@ -2,7 +2,7 @@ import os
 import requests
 import json
 from django.http import JsonResponse
-from . import JSONMozillaParser
+from . import MozillaParser
 from MonitoringSoftwareMarketplaces.serviceInterface import serviceInterface
 from MonitoringSoftwareMarketplaces.repository import Repository
 
@@ -10,12 +10,7 @@ MARKETPLACE = "mozilla"
 class mozillaService(serviceInterface):
     
   
-    def insertGroupProducts(products):
-        newProducts = []
-        for product in products:
-            Repository.insertSingleProduct(product, MARKETPLACE)
-            newProducts.append(product)
-        return newProducts
+ 
     
     def getCategories(request):
         cache = request.GET.get('cache')
@@ -75,9 +70,9 @@ class mozillaService(serviceInterface):
                 response = requests.get('https://addons.mozilla.org/api/v5/addons/search/?category={}&type={}'.format(categoryInfo["api_name"],type))
                 if response.status_code == 200:
                     products = response.json()
-                    insertProducts = JSONMozillaParser.JSONMozillaParser.parseProducts(products)
-                    newProducts = mozillaService.insertGroupProducts(insertProducts)
-                    return JsonResponse(newProducts, safe=False,status=202)
+                    products = MozillaParser.MozillaParser.parseProducts(products)
+                    Repository.insertGroupProducts(products,MARKETPLACE)
+                    return JsonResponse(products, safe=False,status=202)
                 else:
                 # En caso de error, devolver un mensaje de error
                     return JsonResponse({"error": "No se pudo obtener las categorías"}, response.status_code)
@@ -101,9 +96,9 @@ class mozillaService(serviceInterface):
             response = requests.get('https://addons.mozilla.org/api/v5/addons/search/?tag='+keyword)
             if response.status_code == 200:
                 try:
-                    insertProducts = JSONMozillaParser.JSONMozillaParser.parseProducts(response.json())
-                    newProducts = mozillaService.insertGroupProducts(insertProducts)
-                    return JsonResponse(newProducts, safe=False,status=202)
+                    products = MozillaParser.MozillaParser.parseProducts(response.json())
+                    Repository.insertGroupProducts(products,MARKETPLACE)
+                    return JsonResponse(products, safe=False,status=202)
                 except:
                     return JsonResponse({"error": "Ha habido un problema al obtener los productos"}, status=500)
             else:
@@ -122,7 +117,7 @@ class mozillaService(serviceInterface):
             try:    
                 response = requests.get('https://addons.mozilla.org/api/v5/addons/addon/'+productId)
                 if response.status_code == 200:
-                    parsedProduct = JSONMozillaParser.JSONMozillaParser.parseInfoSingleProduct(response.json())
+                    parsedProduct = MozillaParser.MozillaParser.parseSingleProduct(response.json())
                     Repository.insertSingleProduct(parsedProduct,MARKETPLACE)
                     return JsonResponse(parsedProduct, safe=False,status=202)
                 else:
@@ -147,9 +142,9 @@ class mozillaService(serviceInterface):
         response = requests.get('https://addons.mozilla.org/api/v5/addons/search/?q ='+query)
         if (response.status_code == 200):
                 try:
-                    insertProducts = JSONMozillaParser.JSONMozillaParser.parseProducts(response.json())
-                    newProducts = mozillaService.insertGroupProducts(insertProducts)
-                    return JsonResponse(newProducts, safe=False,status=202)
+                    products = MozillaParser.MozillaParser.parseProducts(response.json())
+                    Repository.insertGroupProducts(products,MARKETPLACE)
+                    return JsonResponse(products, safe=False,status=202)
                 except:
                     return JsonResponse({"error": "No se pudo obtener el producto"}, status=400)
         else:
@@ -161,12 +156,12 @@ class mozillaService(serviceInterface):
         if response.status_code == 200:
             try:
                 products = response.json()
-                productGUIDs = JSONMozillaParser.JSONMozillaParser.parseGUIDs(products)
+                productGUIDs = MozillaParser.MozillaParser.parseGUIDs(products)
                 response = requests.get('https://addons.mozilla.org/api/v5/addons/search/?guid='+productGUIDs)
                 if response.status_code == 200:
-                    insertProducts = JSONMozillaParser.JSONMozillaParser.parseProducts(response.json())
-                    newProducts = mozillaService.insertGroupProducts(insertProducts)
-                    return JsonResponse(newProducts, safe=False,status=202)
+                    products = MozillaParser.MozillaParser.parseProducts(response.json())
+                    Repository.insertGroupProducts(products,MARKETPLACE)
+                    return JsonResponse(products, safe=False,status=202)
                 else:
                 # En caso de error, devolver un mensaje de error
                     return JsonResponse({"error": "No se pudo obtener la informacion de los productos"}, response.status_code)

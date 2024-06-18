@@ -1,7 +1,7 @@
 from MonitoringSoftwareMarketplaces.JSONParser import JSONParser
 import xml.etree.ElementTree as ET
 
-class EclipseJSONParser(JSONParser):
+class EclipseParser(JSONParser):
 
     def parseCategories(response):
         categories = []
