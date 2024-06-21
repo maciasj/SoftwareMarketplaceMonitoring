@@ -1,9 +1,12 @@
 openapi: 3.0.0
 info:
-  title: Documentación de la API de Store
-  description: Documentación para el método POST de la API de Store
+  title: Documentación de la API de Microsfot Store
+  description: Documentación de la API de Store
   version: 1.0.0
 servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/JOELMACIAS/RawMarketplaces/1.0.0
   - url: https://storeedgefd.dsx.mp.microsoft.com/
 paths:
   /v8.0/sdk/products:
@@ -47,6 +50,7 @@ paths:
         '200':
           description: Producto añadido correctamente
           
+          
   /v9.0/manifestSearch:
     post:
       summary: Búsqueda por parametro
@@ -72,7 +76,54 @@ paths:
       responses:
         '200':
           description: Búsqueda exitosa
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ManifestSearchResponse'
         '400':
           description: Solicitud incorrecta
-      
-          
+components:
+  schemas:
+    ManifestSearchResponse:
+      type: object
+      properties:
+        $type:
+          type: string
+          example: Microsoft.Marketplace.Storefront.StoreEdgeFD.BusinessLogic.Response.ManifestSearch.ManifestSearchResponse, StoreEdgeFD
+        Data:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManifestSearchData'
+    ManifestSearchData:
+      type: object
+      properties:
+        $type:
+          type: string
+          example: Microsoft.Marketplace.Storefront.StoreEdgeFD.BusinessLogic.Response.ManifestSearch.ManifestSearchData, StoreEdgeFD
+        PackageIdentifier:
+          type: string
+          example: 9WZDNCRFHVN5
+        PackageName:
+          type: string
+          example: Windows Calculator
+        Publisher:
+          type: string
+          example: Microsoft Corporation
+        Versions:
+          type: array
+          items:
+            $ref: '#/components/schemas/ManifestSearchVersion'
+    ManifestSearchVersion:
+      type: object
+      properties:
+        $type:
+          type: string
+          example: Microsoft.Marketplace.Storefront.StoreEdgeFD.BusinessLogic.Response.ManifestSearch.ManifestSearchVersion, StoreEdgeFD
+        PackageVersion:
+          type: string
+          example: Unknown
+        PackageFamilyNames:
+          type: array
+          items:
+            type: string
+            example: Microsoft.WindowsCalculator_8wekyb3d8bbwe

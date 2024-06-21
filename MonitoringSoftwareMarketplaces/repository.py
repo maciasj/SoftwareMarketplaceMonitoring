@@ -11,7 +11,7 @@ class Repository:
             return True
         except Product.DoesNotExist:
             print("No existe el producto")
-            return None
+            return Product.DoesNotExist
 
     def getProductById(id, marketplace):
         try: 
@@ -50,7 +50,6 @@ class Repository:
             print("No se pudo encontrar el producto")
             return None
     
-
     def getCategories(marketplace):
         categories = Category.objects.filter(marketplace=marketplace)
         categories_list = []
@@ -201,13 +200,18 @@ class Repository:
             if(not CategoryInProduct.objects.filter(product=product['identifier'], category=category).exists()):
                 category_in_product.save()
                 print("Insertando categoria en producto: ", category, "nombre  " , product['name'] )
-
+        numKeywords = len(Keyword.objects.filter(marketplace=marketplace))
         #Insertar tags en producto    
-        for keywords in product['keywords']:
-            keywords_in_product = ProductKeyword(product=product['identifier'], keywords=keywords, marketplace=marketplace)
-            if(not ProductKeyword.objects.filter(product=product['identifier'], keywords=keywords).exists()):
+        for keyword in product['keywords']:
+            keywords_in_product = ProductKeyword(product=product['identifier'], keywords=keyword, marketplace=marketplace)
+            if(not Keyword.objects.filter(name=keyword, marketplace=marketplace).exists()):
+                newKeyword = Keyword(identifier=numKeywords+1, name=keyword, marketplace=marketplace)
+                numKeywords = numKeywords + 1
+                newKeyword.save()
+                
+            if(not ProductKeyword.objects.filter(product=product['identifier'], keywords=keyword).exists()):
                 keywords_in_product.save()
-                print("Insertando Tag en producto: ", keywords, "nombre  " , product['name'] )
+                print("Insertando Tag en producto: ", keyword, "nombre  " , product['name'] )
 
     def insertKeywords(keywords, marketplace):
         cont = 1
@@ -237,8 +241,6 @@ class Repository:
         return objectCategory
     
     def insertGroupProducts(products, marketplace):
-        newProducts = []
         for product in products:
             Repository.insertSingleProduct(product, marketplace)
-            newProducts.append(product)
-        return newProducts
+        

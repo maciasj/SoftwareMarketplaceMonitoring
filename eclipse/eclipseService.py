@@ -26,7 +26,7 @@ class EclipseService(serviceInterface):
                 markets = EclipseParser.EclipseParser.parseMarkets(response)
                 Repository.insertMarkets(markets, MARKETPLACE)
                 response.json = {'categories': categories, 'markets': markets}
-                return JsonResponse(response.json, safe=False,status=202)
+                return JsonResponse(response.json, safe=False,status=200)
             except :
                 return JsonResponse({'error': 'Error al obtener las Categorias'},status=response.status_code, safe=False )
             
@@ -47,7 +47,7 @@ class EclipseService(serviceInterface):
                 products = EclipseParser.EclipseParser.parseProducts(response,"category")
                 for product in products:
                     Repository.insertSingleProduct(product, MARKETPLACE)
-                return JsonResponse(products, safe=False,status=202)
+                return JsonResponse(products, safe=False,status=200)
             except:
                 return JsonResponse({'error': 'Error al obtener los productis'},status=response.status_code)
         else:
@@ -67,15 +67,14 @@ class EclipseService(serviceInterface):
         response = requests.get('https://marketplace.eclipse.org/node/{}/api/p'.format(nodeId), params=params)
         if response.status_code == 200:
             try:
-                info = response.text
                 product = EclipseParser.EclipseParser.extractSingleProduct(response)
                 Repository.insertSingleProduct(product, MARKETPLACE)
-                return JsonResponse(product, safe=False,status=202)
+                return JsonResponse(product, safe=False,status=200)
             except json.JSONDecodeError:
                 return JsonResponse({'error': 'Error al obtener el producti'},status=400)
         else:
             # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
-            return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
+            return JsonResponse({'error': f'Solicitud no exitosa. Comprueba que el identificador sea correcto'}, status=500)
 
     #Eliminar porque no tiene sentido    
     def getProductByTitle(request):
@@ -96,36 +95,35 @@ class EclipseService(serviceInterface):
         
     def getTopFavorites(request):
         pageNumber = request.GET.get('page_num') or 1
-        params = {'page_num': pageNumber}  
 
-        response = requests.get('https://marketplace.eclipse.org/favorites/top/api/p', params=params)
+        response = requests.get('https://marketplace.eclipse.org/favorites/top/api/p'+"?page_num{}".format(pageNumber))
         
         if response.status_code == 200:
             try:
                 products = EclipseParser.EclipseParser.parseProducts(response,"favorites")
                 for product in products:
                     Repository.insertSingleProduct(product, MARKETPLACE)
-                return JsonResponse(products, safe=False,status=202)
+                return JsonResponse(products, safe=False,status=200)
             except json.JSONDecodeError:
                 return {'error': 'Error al decodificar JSON en la respuesta'}
         else:
             # Si la respuesta no fue exitosa, regresar un mensaje de error con el código de estado
             return {'error': f'Solicitud no exitosa. Código de estado: {response.status_code}'}
         
-    def getProductByQuery(request):
+    def getProductByQuery(request, query):
         cache = request.GET.get('cache')
-        query = request.GET.get('query')
-        parameters = request.GET.get('parameters')
+        
+        pagenum = request.GET.get('pagenum')
         if(cache == "1"):
             products = Repository.getProductsByQuery(query,MARKETPLACE)
             return JsonResponse(products, safe=False,status=201)
-        response = requests.get('http://marketplace.eclipse.org/api/p/search/apachesolr_search/{}'.format(query)+"?{}".format(parameters))
+        response = requests.get('http://marketplace.eclipse.org/api/p/search/apachesolr_search/{}'.format(query)+"?page_num={}".format(pagenum))
         if response.status_code == 200:
             try:
                 products = EclipseParser.EclipseParser.parseProducts(response,"search")
                 for product in products:
                     Repository.insertSingleProduct(product, MARKETPLACE)
-                return JsonResponse(products, safe=False,status=202)
+                return JsonResponse(products, safe=False,status=200)
             except :
                 return {'error': 'Error al obtener los productos'}
         else:
@@ -143,8 +141,9 @@ class EclipseService(serviceInterface):
         
     def deleteProduct(request, id):
         try:
-            Repository.deleteProduct(id, MARKETPLACE)
-            return JsonResponse({'message': 'Producto eliminado correctamente'}, safe=False, status=204)
+            if (Repository.deleteProduct(id, MARKETPLACE) == True):
+                return JsonResponse({'message': 'Producto eliminado correctamente'}, safe=False, status=204)
+            else: return JsonResponse({'error': 'Producto no encontrado'}, safe=False, status=404)
         except:
             return JsonResponse({'error': 'Error al eliminar el producto'}, safe=False, status=500)
     
@@ -157,8 +156,11 @@ class EclipseService(serviceInterface):
     
     def getProductByKeyword(request,keyword):
         try:
-            products = Repository.getProductByKeyword(keyword, MARKETPLACE)
-            return JsonResponse(products, safe=False, status=200)
+            if(Repository.existeKewyword(keyword,MARKETPLACE)):
+                products = Repository.getProductByKeyword(keyword, MARKETPLACE)
+                return JsonResponse(products, safe=False, status=200)
+            else:
+                return JsonResponse({'error': 'No se encontraron productos con la palabra clave especificada'}, safe=False, status=404)
         except:
             return JsonResponse({'error': 'Error al obtener los productos'}, safe=False, status=500)
     

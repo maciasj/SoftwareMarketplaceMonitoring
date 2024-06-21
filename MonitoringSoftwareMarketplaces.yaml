@@ -1,0 +1,999 @@
+openapi: 3.0.0
+info:
+  title: Documentación de la API para el Sistema de Monitorización de Marketplaces de Software
+  description: Documentación de la API para poder acceder directamente a los distintos monitores desde una única API
+  version: 1.0.0
+  
+paths:
+  /eclipse/retrieve-marketplaces-and-categories:
+    get:
+      summary: Obtener las categorías y mercados proporcionados por Eclipse Marketplace
+      tags:
+        - Eclipse
+      operationId: retrieveMarketplacesAndCategories
+      parameters:
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+        - name: page_num
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+      responses:
+        '202':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  categories:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Category'
+                  markets:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Market'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /eclipse/retrieve-keywords:
+    get:
+      summary: Obtener las keywords de eclipse
+      tags:
+        - Eclipse
+      operationId: retrieveKeywords
+      responses:
+        '200':
+          description: Respuesta exitosa, devuelve un array de strings
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: string
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        
+                    
+  /eclipse/markets/{market}/categories/{category}/products:
+    get:
+      summary: Obtener productos por mercado y categoría
+      tags:
+        - Eclipse
+      operationId: getProductsByMarketplaceAndCategory
+      parameters:
+        - name: market
+          in: path
+          description: Market ID
+          required: true
+          schema:
+            type: integer
+        - name: category
+          in: path
+          description: Category ID
+          required: true
+          schema:
+            type: integer
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+        - name: page_num
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          description: Bad request
+  /eclipse/product/keyword/{keyword}:
+    get:
+      summary: Obtener productos por mercado y categoría
+      tags:
+        - Eclipse
+      operationId: getProductsByKeyword
+      parameters:
+        - name: keyword
+          in: path
+          description: Nombre del keyword que buscar
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          description: Bad request       
+  /eclipse/product/id/{nodeId}:
+    get:
+      summary: Obtener producto por ID
+      tags:
+        - Eclipse
+      operationId: getProductById
+      parameters:
+        - name: nodeId
+          in: path
+          description: Product node ID
+          required: true
+          schema:
+            type: integer
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+        - name: page_num
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: Product not found
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /eclipse/products/top-favorites:
+    get:
+      summary: Obtener productos favoritos
+      tags:
+        - Eclipse
+      operationId: getTopFavorites
+      parameters:
+        - name: page_num
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /eclipse/search/products:
+    get:
+      summary: Buscar productos
+      tags:
+        - Eclipse
+      operationId: getProductByQuery
+      parameters:
+        - name: query
+          in: query
+          description: Search query
+          required: true
+          schema:
+            type: string
+        - name: pagenum
+          in: query
+          description: Pagination number
+          required: false
+          schema:
+            type: string
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          description: Bad request
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /eclipse/add-products:
+    put:
+      summary: Añadir nuevos productos
+      tags:
+        - Eclipse
+      operationId: addProducts
+      requestBody:
+        description: Product objects to add
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AddProduct'
+      responses:
+        '201':
+          description: Productos añadidos correctamente
+        '500':
+          description: Error al añadir productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /eclipse/delete/product/{id}:
+    delete:
+      summary: Eliminar un producto
+      tags:
+        - Eclipse
+      operationId: deleteProduct
+      parameters:
+        - name: id
+          in: path
+          description: Product ID
+          required: true
+          schema:
+            type: integer
+      responses:
+        '204':
+          description: Producto eliminado correctamente
+        '500':
+          description: Error al eliminar el producto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+                    
+  /mozilla/retrieve-categories:
+    get:
+      summary: Obtener las categorías disponibles en Mozilla Marketplace
+      tags:
+        - Mozilla
+      operationId: getCategories
+      parameters:
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Categories
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        
+        '500':
+          description: No se pudo obtener las categorías
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /mozilla/retrieve-tags:
+    get:
+      summary: Obtener las etiquetas disponibles en Mozilla Marketplace
+      tags:
+        - Mozilla
+      operationId: getTags
+      parameters:
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Keyword'
+        '500':
+          description: No se pudo obtener las etiquetas
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /mozilla/categories/products:
+    get:
+      summary: Obtener productos por categoría
+      tags:
+        - Mozilla
+      operationId: getProductsByCategory
+      parameters:
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+        - name: category
+          in: query
+          description: Category name
+          required: true
+          schema:
+            type: string
+        - name: type
+          in: query
+          description: Product type
+          required: false
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '404':
+          description: La categoría introducida no existe
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+        '500':
+          description: No se pudo obtener los productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /mozilla/keywords/products:
+    get:
+      summary: Obtener productos por palabra clave
+      tags:
+        - Mozilla
+      operationId: getProductsByKeywordEclipse
+      parameters:
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+        - name: keyword
+          in: query
+          description: Keyword
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          description: No se pudo obtener los productos
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /mozilla/product/id/{productId}:
+    get:
+      summary: Obtener producto por ID
+      tags:
+        - Mozilla
+      operationId: getProductByIdMozilla
+      parameters:
+        - name: productId
+          in: path
+          description: Product ID
+          required: true
+          schema:
+            type: string
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Product retrieved from cache
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+      
+        '400':
+          description: No se pudo encontrar el producto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /mozilla/search/products:
+    get:
+      summary: Buscar productos
+      tags:
+        - Mozilla
+      operationId: getProductByQueryMozilla
+      parameters:
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+        - name: query
+          in: query
+          description: Search query
+          required: true
+          schema:
+            type: string
+        - name: page
+          in: query
+          description: Page number
+          required: false
+          schema:
+            type: integer
+      responses:
+        '200':
+          description: Products retrieved from cache
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '400':
+          description: No se pudo obtener el producto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /mozilla/discovery/products:
+    get:
+      summary: Descubrir productos
+      tags:
+        - Mozilla
+      operationId: discoveryProducts
+      responses:
+        '200':
+          description: Products discovered and retrieved from API
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '500':
+          description: Error en la llamada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /mozilla/add-products:
+    put:
+      summary: Añadir nuevos productos
+      tags:
+        - Mozilla
+      operationId: addProductsMozilla
+      requestBody:
+        description: Productos a añadir
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AddProduct'
+      responses:
+        '201':
+          description: Producto insertado correctamente
+        '500':
+          description: Error al insertar el producto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /mozilla/delete-product/{productId}:
+    delete:
+      summary: Eliminar un producto
+      tags:
+        - Mozilla
+      operationId: deleteProductMozilla
+      parameters:
+        - name: productId
+          in: path
+          description: Product ID
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Producto eliminado correctamente
+        '500':
+          description: Error al eliminar el producto
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+  /microsoft/add-categories:
+    post:
+      summary: Añadir nuevas categorías
+      tags:
+        - Microsoft
+      operationId: addCategories
+      requestBody:
+        description: Categorías a añadir
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                categories:
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      name:
+                        type: string
+                      api_name:
+                        type: string
+      responses:
+        '201':
+          description: Categorías insertadas correctamente
+          
+              
+        '400':
+          description: Error en la llamada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /microsoft/retrieve-categories:
+    get:
+      summary: Obtener categorías disponibles
+      tags:
+        - Microsoft
+      operationId: getCategoriesMicrosoft
+      responses:
+        '200':
+          description: Categorías recuperadas correctamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Category'
+        '500':
+          description: Error en la llamada
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  error:
+                    type: string
+
+  /microsoft/product/id/{id}:
+    get:
+      summary: Obtener producto por ID
+      tags:
+        - Microsoft
+      operationId: getProductByIdMicrosoft
+      parameters:
+        - name: id
+          in: path
+          description: ID del producto
+          required: true
+          schema:
+            type: string
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Producto recuperado del caché
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Product'
+        '404':
+          description: No se pudo encontrar el producto
+
+  /microsoft/search/products:
+    get:
+      summary: Buscar productos
+      tags:
+        - Microsoft
+      operationId: searchProduct
+      parameters:
+        - name: cache
+          in: query
+          description: Cache flag
+          required: false
+          schema:
+            type: string
+        - name: query
+          in: query
+          description: Consulta de búsqueda
+          required: true
+          schema:
+            type: string
+        - name: match
+          in: query
+          description: Tipo de coincidencia
+          required: false
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Productos recuperados del caché
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Product'
+        '404': 
+          description: Bad request
+        '500':
+          description: No se pudo encontrar el producto
+
+  /microsoft/add-product:
+    put:
+      summary: Añadir nuevos productos
+      tags:
+        - Microsoft
+      operationId: addProduct
+      requestBody:
+        description: Productos a añadir
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/AddProduct'
+      responses:
+        '201':
+          description: Productos añadidos correctamente
+        '404':
+          description: No se pudo insertar el producto
+
+  /microsoft/delete/product/{id}:
+    delete:
+      summary: Eliminar un producto
+      tags:
+        - Microsoft
+      operationId: deleteProductMicrosoft
+      parameters:
+        - name: id
+          in: path
+          description: ID del producto
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Producto eliminado correctamente
+        '404':
+          description: Producto no encontrado
+
+
+
+components:
+  schemas:
+    Category:
+      type: object
+      properties:
+        identifier:
+          type: integer
+          description: "Primary key for the category"
+        name:
+          type: string
+          description: "Name of the category"
+        api_name:
+          type: string
+          description: "API name of the category"
+        url:
+          type: string
+          format: uri
+          description: "URL of the category"
+        description:
+          type: string
+          description: "Description of the category"
+        marketplace:
+          type: string
+          description: "Marketplace of the category"
+        type:
+          type: string
+          description: "Type of the category"
+      required:
+        - identifier
+        - marketplace
+
+    Market:
+      type: object
+      properties:
+        identifier:
+          type: integer
+          description: "Primary key for the market"
+        url:
+          type: string
+          format: uri
+          description: "URL of the market"
+        name:
+          type: string
+          description: "Name of the market"
+        marketplace:
+          type: string
+          description: "Marketplace of the market"
+      required:
+        - identifier
+        - marketplace
+
+    Keyword:
+      type: object
+      properties:
+        identifier:
+          type: integer
+          description: "Primary key for the keyword"
+        name:
+          type: string
+          description: "Name of the keyword"
+        marketplace:
+          type: string
+          description: "Marketplace of the keyword"
+      required:
+        - identifier
+        - marketplace
+
+    Product:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: "Primary key for the product"
+        url:
+          type: string
+          format: uri
+          description: "URL of the product"
+        name:
+          type: string
+          description: "Name of the product"
+        description:
+          type: string
+          description: "Description of the product"
+        type:
+          type: string
+          description: "Type of the product"
+        creator:
+          type: string
+          description: "Creator of the product"
+        marketplace:
+          type: string
+          description: "Marketplace of the product"
+        categories:
+          type: array
+          items:
+            type: string
+          description: "Categories"
+        keywords:
+          type: array
+          items:
+            type: string
+          description: "Keywords"
+              
+      required:
+        - identifier
+        - marketplace
+
+    AddProduct:
+      type: object
+      properties:
+        identifier:
+          type: string
+          description: "Primary key for the product"
+        url:
+          type: string
+          format: uri
+          description: "URL of the product"
+        name:
+          type: string
+          description: "Name of the product"
+        description:
+          type: string
+          description: "Description of the product"
+        type:
+          type: string
+          description: "Type of the product"
+        creator:
+          type: string
+          description: "Creator of the product"
+        marketplace:
+          type: string
+          description: "Marketplace of the product"
+        keywords:
+          type: array
+          items:
+            $ref: '#/components/schemas/Keyword'
+          description: "Keywords of the product"
+        categories:
+          type: array
+          items:
+            $ref: '#/components/schemas/Category'
+          description: "Categories of the product"
+            
+        
+      required:
+        - identifier
+        - marketplace
+
+    KeywordsInProduct:
+      type: object
+      properties:
+        product:
+          type: integer
+          description: "Product ID associated with the keyword"
+        keywords:
+          type: string
+          description: "Keyword associated with the product"
+        marketplace:
+          type: string
+          description: "Marketplace of the product"
+      required:
+        - product
+        - keywords
+        - marketplace
+
+    Manufacturer:
+      required:
+        - name
+      properties:
+        name:
+          type: string
+          example: ACME Corporation
+        homePage:
+          type: string
+          format: url
+          example: 'https://www.acme-corp.com'
+        phone:
+          type: string
+          example: 408-867-5309
+      type: object
+servers:
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/JOELMACIAS/SoftwareMarketplaceMonitoring/1.0.0

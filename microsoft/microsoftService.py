@@ -8,13 +8,7 @@ from MonitoringSoftwareMarketplaces.repository import Repository
 
 MARKETPLACE = "microsoft"   
 class microsoftService(serviceInterface):
-
-    def insertGroupProducts(products):
-        newProducts = []
-        for product in products:
-            Repository.insertSingleProduct(product, MARKETPLACE)
-            newProducts.append(product)
-        return newProducts
+    
     
     def getSearchURL(filters,categoryAPIname):
         url = 'https://apps.microsoft.com/search?query='+filters['query']+'&department=Apps'
@@ -54,13 +48,13 @@ class microsoftService(serviceInterface):
                 secondResponse = requests.post('https://storeedgefd.dsx.mp.microsoft.com/v8.0/sdk/products?market=US&locale=en-US&deviceFamily=Windows.Desktop',json=productids)
                 if response.status_code == 200:
                     products = microsoftParser.microsoftParser.parseProducts(secondResponse.json())
-                    microsoftService.insertGroupProducts(products)
-                    return JsonResponse(products, safe=False,status=201)
+                    Repository.insertGroupProducts(products, MARKETPLACE)
+                    return JsonResponse(products, safe=False,status=200)
                 else:
                     return JsonResponse({"error": "No se pudo obtener los productos"}, response.status_code)
             else:
             # En caso de error, devolver un mensaje de error
-                return JsonResponse({"error": "No se pudo obtener las categorías"}, response.status_code)
+                return JsonResponse({"error": "No se pudo obtener los productos"}, response.status_code)
     
     def getProductById(request, id):
         cache = request.GET.get('cache')
@@ -68,7 +62,7 @@ class microsoftService(serviceInterface):
             product = Repository.getProductById(id, MARKETPLACE)
             if product is None:
                 return JsonResponse({"error": "No se pudo encontrar el producto"}, status=404)
-            return JsonResponse(product, safe=False,status=201)
+            return JsonResponse(product, safe=False,status=200)
         else:
             params = {
                 'productIds': id,
@@ -77,14 +71,14 @@ class microsoftService(serviceInterface):
             if response.status_code == 200:
                 product = microsoftParser.microsoftParser.parseProducts(response.json())
                 print(product)
-                microsoftService.insertGroupProducts(product)
-                return JsonResponse(product, safe=False,status=202)
+                Repository.insertGroupProducts(product, MARKETPLACE)
+                return JsonResponse(product, safe=False,status=200)
             else:
                 return JsonResponse({"error": "No se pudo obtener el producto"}, response.status_code)
             
     def addProduct(request):
         data = json.loads(request.body)
-        products = microsoftService.insertGroupProducts(data)
+        products = Repository.insertGroupProducts(data,MARKETPLACE)
         if products is None:
             return JsonResponse({"error": "No se pudo insertar el producto"}, status=404)
         return JsonResponse( {"message": "Productos añadidos correctamente"} ,safe=False,status=201)

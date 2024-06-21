@@ -1,0 +1,366 @@
+{
+    "Products": [
+        {
+            "LocalizedProperties": [
+                {
+                    "DeveloperName": "Breakpoint",
+                    "PublisherName": "Bigben Interactive",
+                    "PublisherWebsiteUri": "http://www.bigben.fr/",
+                    "SupportUri": "",
+                    "EligibilityProperties": {
+                        "Remediations": [
+                            {
+                                "RemediationId": "9ZH7BH6P9RM7",
+                                "Description": "Go Gold today to take advantage of exclusive Xbox discounts, special deals, and offers."
+                            }
+                        ],
+                        "Affirmations": []
+                    },
+                    "Images": [
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "Screenshot",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.23914.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.74c736aa-46e9-40a4-af23-5decbf73983a",
+                            "Width": 1920
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "BoxArt",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.40517.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.f28cfe72-47e5-4cae-acda-62d765355aed",
+                            "Width": 1080
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 800,
+                            "ImagePurpose": "BrandedKeyArt",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.36096.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.99fb84dd-d9b2-4def-95e0-757e61bdd666",
+                            "Width": 584
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "Poster",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.8087.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.b20615be-0340-4dda-bf45-706068c43094",
+                            "Width": 720
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "FeaturePromotionalSquareArt",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.38899.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.6dd677ec-f533-4fdb-b66c-91ee8f8ac5f3",
+                            "Width": 1080
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "SuperHeroArt",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.59038.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.5b9a67bc-2aec-46e8-b5b2-212fd85548e6",
+                            "Width": 1920
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "TitledHeroArt",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.27319.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.bcc55a05-f9a8-4bbe-9d03-54d372bf428e",
+                            "Width": 1920
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "Screenshot",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.16261.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.53a11437-4ee8-4e3f-b5e9-7eea763953e3",
+                            "Width": 1920
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "Screenshot",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.37950.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.9acfa455-70fd-4df6-9851-2918ff7b4238",
+                            "Width": 1920
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "Screenshot",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.43292.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.06df82b1-32bd-42f7-82b0-27877a34598e",
+                            "Width": 1920
+                        },
+                        {
+                            "BackgroundColor": "#FFFFFF",
+                            "Caption": "",
+                            "ForegroundColor": "#FFFFFF",
+                            "Height": 1080,
+                            "ImagePurpose": "Screenshot",
+                            "Uri": "//store-images.s-microsoft.com/image/apps.54714.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.8d197b70-431b-43ad-8ba6-3cbaa0d78bab",
+                            "Width": 1920
+                        }
+                    ],
+                    "Videos": [
+                        {
+                            "Uri": "http://xbl-smooth.xboxlive.com/video/xdp/mp4/stereo/f2bdb7d0-4514-42e2-94b9-a64ea071720e/b3eadb00-33a9-491d-a2d4-c6b4d185138b/0dd8a912-525b-428c-a0d2-0f043e3cffeb/0dd8a912-525b-428c-a0d2-0f043e3cffeb.ism/manifest",
+                            "VideoPurpose": "trailer",
+                            "Height": 1080,
+                            "Width": 1920,
+                            "Caption": "Gameplay Trailer No Rating",
+                            "PreviewImage": {
+                                "BackgroundColor": null,
+                                "Caption": "Gameplay Trailer No Rating",
+                                "ForegroundColor": null,
+                                "Height": 1080,
+                                "ImagePurpose": "trailer",
+                                "Uri": "//store-images.s-microsoft.com/image/apps.30725.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.5028ff39-5cc9-4281-bbc3-3e5190a25d5a",
+                                "Width": 1920
+                            }
+                        },
+                        {
+                            "Uri": "http://xbl-smooth.xboxlive.com/video/xdp/mp4/stereo/f2bdb7d0-4514-42e2-94b9-a64ea071720e/423c3672-ecd9-44b3-bc95-a8f80c27f4b4/14618cc9-e7ba-4806-9c4d-abe5ff0dcbba/14618cc9-e7ba-4806-9c4d-abe5ff0dcbba.ism/manifest",
+                            "VideoPurpose": "trailer",
+                            "Height": 1080,
+                            "Width": 1920,
+                            "Caption": "Gameplay Trailer PEGI",
+                            "PreviewImage": {
+                                "BackgroundColor": null,
+                                "Caption": "Gameplay Trailer PEGI",
+                                "ForegroundColor": null,
+                                "Height": 1080,
+                                "ImagePurpose": "trailer",
+                                "Uri": "//store-images.s-microsoft.com/image/apps.30725.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.5028ff39-5cc9-4281-bbc3-3e5190a25d5a",
+                                "Width": 1920
+                            }
+                        },
+                        {
+                            "Uri": "http://xbl-smooth.xboxlive.com/video/xdp/mp4/stereo/f2bdb7d0-4514-42e2-94b9-a64ea071720e/e21605ce-0ae6-4331-96fd-4126f0455df9/6832ecfb-aaa3-43fe-8226-2d42eaf06f44/6832ecfb-aaa3-43fe-8226-2d42eaf06f44.ism/manifest",
+                            "VideoPurpose": "trailer",
+                            "Height": 1080,
+                            "Width": 1920,
+                            "Caption": "Gameplay Trailer ESRB",
+                            "PreviewImage": {
+                                "BackgroundColor": null,
+                                "Caption": "Gameplay Trailer ESRB",
+                                "ForegroundColor": null,
+                                "Height": 1080,
+                                "ImagePurpose": "trailer",
+                                "Uri": "//store-images.s-microsoft.com/image/apps.30725.71721752753964844.e6fc79bb-c8d0-4c65-9a3d-b3c16eda6af6.5028ff39-5cc9-4281-bbc3-3e5190a25d5a",
+                                "Width": 1920
+                            }
+                        }
+                    ],
+                    "ProductDescription": "Choose the Legends Edition and receive the following bonuses:\r\n- Two legendary players: John McEnroe (1990) & Andre Agassi (1995)\r\n- 5 skill cards\r\n- An exclusive coach giving you an experience boost\r\n- Two Wilson Pro Staff rackets\r\n- Two complete official outfits\r\n- An online player badge\r\n\r\n\r\nTHE BIGGEST STARS IN TENNIS\r\n• Play as one of 30 of the best players in the world, including Federer, Kerber and Wawrinka.\r\nPERFECTLY REPRODUCED MOVEMENT\r\n• Make all the shots used in modern tennis, carefully reproduced in the game using motion capture technology. \r\nEVERY PLAYING SURFACE\r\n• 18 types of court: hard, clay, grass, and more.  Each surface affects the playing conditions.\r\nA COMPLETE CAREER MODE\r\n• Create your player and experience a career worthy of a professional.\r\nAN UNEQUALLED TACTICAL DIMENSION\r\n• Decide what strategy to adopt for each match and use your skill cards to defeat your opponents.",
+                    "ProductTitle": "Tennis World Tour Legends Edition",
+                    "SearchTitles": [],
+                    "Language": "en-us",
+                    "ShortDescription": "The new standard developed by veterans of tennis simulations: play as one of 30 professional tennis players, learn all the shots, master each type of surface and experience a realistic career mode. Define your style of play and tactics to become n°1 in the world!"
+                }
+            ],
+            "MarketProperties": [
+                {
+                    "RelatedProducts": [
+                        {
+                            "RelatedProductId": "BZX8LHQFCCRH",
+                            "RelationshipType": "SellableBy"
+                        },
+                        {
+                            "RelatedProductId": "BRJJ880Z00J6",
+                            "RelationshipType": "Parent"
+                        },
+                        {
+                            "RelatedProductId": "BWC47S18LP6N",
+                            "RelationshipType": "Parent"
+                        },
+                        {
+                            "RelatedProductId": "C2PLBZXN22V7",
+                            "RelationshipType": "Parent"
+                        },
+                        {
+                            "RelatedProductId": "BZQNQJMRDH0D",
+                            "RelationshipType": "Parent"
+                        },
+                        {
+                            "RelatedProductId": "C1VX1RXV1QP6",
+                            "RelationshipType": "Parent"
+                        },
+                        {
+                            "RelatedProductId": "C3VJHL1L9JGN",
+                            "RelationshipType": "Parent"
+                        },
+                        {
+                            "RelatedProductId": "BNQBRX5ZSWCG",
+                            "RelationshipType": "Parent"
+                        },
+                        {
+                            "RelatedProductId": "BZX8LHQFCCRH",
+                            "RelationshipType": "Parent"
+                        },
+                        {
+                            "RelatedProductId": "BNGXBJ7DSZ2H",
+                            "RelationshipType": "Parent"
+                        }
+                    ]
+                }
+            ],
+            "ProductId": "BWV5N56M5BVH",
+            "Properties": {
+                "PackageFamilyName": "",
+                "XPAEnabled": false,
+                "XboxLiveEnabled": true
+            },
+            "ProductKind": "Game",
+            "DisplaySkuAvailabilities": [
+                {
+                    "Sku": {
+                        "LocalizedProperties": [
+                            {
+                                "SkuDescription": "Choose the Legends Edition and receive the following bonuses:\r\n- Two legendary players: John McEnroe (1990) & Andre Agassi (1995)\r\n- 5 skill cards\r\n- An exclusive coach giving you an experience boost\r\n- Two Wilson Pro Staff rackets\r\n- Two complete official outfits\r\n- An online player badge\r\n\r\n\r\nTHE BIGGEST STARS IN TENNIS\r\n• Play as one of 30 of the best players in the world, including Federer, Kerber and Wawrinka.\r\nPERFECTLY REPRODUCED MOVEMENT\r\n• Make all the shots used in modern tennis, carefully reproduced in the game using motion capture technology. \r\nEVERY PLAYING SURFACE\r\n• 18 types of court: hard, clay, grass, and more.  Each surface affects the playing conditions.\r\nA COMPLETE CAREER MODE\r\n• Create your player and experience a career worthy of a professional.\r\nAN UNEQUALLED TACTICAL DIMENSION\r\n• Decide what strategy to adopt for each match and use your skill cards to defeat your opponents.",
+                                "SkuTitle": "Tennis World Tour Legends Edition",
+                                "SkuButtonTitle": "",
+                                "SkuDisplayRank": [
+                                    {
+                                        "Dimension": "",
+                                        "Rank": 2
+                                    }
+                                ],
+                                "LegalText": {
+                                    "Copyright": "",
+                                    "CopyrightUri": "",
+                                    "PrivacyPolicy": "",
+                                    "PrivacyPolicyUri": "",
+                                    "Tou": "",
+                                    "TouUri": ""
+                                },
+                                "Language": "en-us"
+                            }
+                        ],
+                        "Properties": {
+                            "FulfillmentType": null,
+                            "BundledSkus": [
+                                {
+                                    "BigId": "BRJJ880Z00J6"
+                                },
+                                {
+                                    "BigId": "BWC47S18LP6N"
+                                },
+                                {
+                                    "BigId": "C2PLBZXN22V7"
+                                },
+                                {
+                                    "BigId": "BZQNQJMRDH0D"
+                                },
+                                {
+                                    "BigId": "C1VX1RXV1QP6"
+                                },
+                                {
+                                    "BigId": "C3VJHL1L9JGN"
+                                },
+                                {
+                                    "BigId": "BNQBRX5ZSWCG"
+                                },
+                                {
+                                    "BigId": "BZX8LHQFCCRH"
+                                },
+                                {
+                                    "BigId": "BNGXBJ7DSZ2H"
+                                }
+                            ],
+                            "IsRepurchasable": false,
+                            "SkuDisplayRank": 0,
+                            "IsTrial": false
+                        },
+                        "SkuId": "0001",
+                        "RecurrencePolicy": null,
+                        "DisplayProperties": {
+                            "IsPreOrder": false
+                        }
+                    },
+                    "Availabilities": [
+                        {
+                            "Actions": [
+                                "Details",
+                                "Purchase",
+                                "Browse",
+                                "Curate",
+                                "Redeem"
+                            ],
+                            "AvailabilityId": "9RKLC3TQMT5C",
+                            "Conditions": {
+                                "EndDate": "9998-12-30T00:00:00Z"
+                            },
+                            "OrderManagementData": {
+                                "Price": {
+                                    "CurrencyCode": "USD",
+                                    "ListPrice": 24.99,
+                                    "MSRP": 24.99,
+                                    "StrikethroughPrice": "$24.99",
+                                    "DisplayPrice": "$24.99"
+                                }
+                            },
+                            "DisplayRank": 0,
+                            "RemediationRequired": false
+                        },
+                        {
+                            "Actions": [
+                                "Details"
+                            ],
+                            "AvailabilityId": "9ZDR39F11Q96",
+                            "Conditions": {
+                                "EndDate": "9998-12-30T00:00:00Z"
+                            },
+                            "DisplayRank": 1,
+                            "RemediationRequired": false
+                        },
+                        {
+                            "Actions": [
+                                "Details",
+                                "Browse",
+                                "Curate",
+                                "Gift"
+                            ],
+                            "AvailabilityId": "9N66P4Q3MGJD",
+                            "Conditions": {
+                                "EndDate": "9998-12-30T00:00:00Z"
+                            },
+                            "DisplayRank": 2,
+                            "RemediationRequired": false
+                        },
+                        {
+                            "Actions": [
+                                "License",
+                                "Browse",
+                                "Details"
+                            ],
+                            "AvailabilityId": "9TFFFFNQZ6JW",
+                            "Conditions": {
+                                "EndDate": "9998-12-30T00:00:00Z"
+                            },
+                            "DisplayRank": 3,
+                            "RemediationRequired": false
+                        }
+                    ]
+                }
+            ],
+            "AverageRating": 2.2,
+            "TotalRatingsCount": 4
+        }
+    ]
+}
